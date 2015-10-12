@@ -15,7 +15,15 @@ public class LiteEntityManager {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public EntityManager getEntityManager() {
-        return this.entityManager;
+    public void beginTransaction() {
+        entityManager.getTransaction().begin();
+    }
+
+    public void commitTransaction() {
+        entityManager.getTransaction().commit();
+    }
+
+    public void rollbackTransaction() {
+        entityManager.getTransaction().rollback();
     }
 }
