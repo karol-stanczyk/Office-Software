@@ -21,6 +21,12 @@
         <dependency>
             <groupId>com.karol</groupId>
             <artifactId>office-software-business</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.airhacks</groupId>
+                    <artifactId>afterburner.fx</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
