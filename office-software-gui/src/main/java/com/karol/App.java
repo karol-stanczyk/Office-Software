@@ -1,42 +1,32 @@
 package com.karol;
 
 import com.airhacks.afterburner.injection.Injector;
-import com.karol.presentation.layout.LayoutService;
 import com.karol.presentation.layout.LayoutView;
+import com.karol.presentation.layout.control.LayoutService;
+import com.karol.utils.Bundles;
+import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 
 public class App extends Application {
 
-    public static final String APPLICATION_NAME = "Office-Software";
-
     @Override
     public void start(Stage stage) throws Exception {
-        /*
-         * Properties of any type can be easily injected.
-         */
-        LocalDate date = LocalDate.of(4242, Month.JULY, 21);
-        Map<Object, Object> customProperties = new HashMap<>();
-        customProperties.put("date", date);
-        /*
-         * any function which accepts an Object as key and returns
-         * and return an Object as result can be used as source.
-         */
-        Injector.setConfigurationSource(customProperties::get);
+        Localization.setLocale(new Locale("PL","PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
         layoutService.setApplicationStage(stage);
+        setCloseEvent(stage, layoutService);
+        configureApplicationStage(stage);
+        stage.show();
+    }
 
-        System.setProperty("happyEnding", " Enjoy the flight!");
-        stage.setTitle(APPLICATION_NAME);
+    private void configureApplicationStage(Stage stage) {
+        stage.setTitle(Bundles.get("application.title"));
         stage.setScene(createMainScene());
         stage.setResizable(false);
-        stage.show();
     }
 
     public Scene createMainScene() {
@@ -44,6 +34,13 @@ public class App extends Application {
         final String uri = getClass().getResource("app.css").toExternalForm();
         scene.getStylesheets().add(uri);
         return scene;
+    }
+
+    private void setCloseEvent(Stage stage, LayoutService layoutService) {
+        stage.setOnCloseRequest(event -> {
+            layoutService.closeApplication();
+            event.consume();
+        });
     }
 
 

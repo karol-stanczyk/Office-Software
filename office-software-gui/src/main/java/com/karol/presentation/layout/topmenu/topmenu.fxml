@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.StackPane?>
 <StackPane id="top-menu"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -10,6 +8,10 @@
     <MenuBar>
         <Menu text="%top.menu.file">
             <MenuItem text="%top.menu.exit" onAction="#exit"/>
+        </Menu>
+        <Menu text="%top.menu.contractors">
+            <MenuItem text="%top.menu.contractors.new" onAction="#newContractor"/>
+            <MenuItem text="%top.menu.contractors.list" onAction="#contractorList"/>
         </Menu>
     </MenuBar>
 </StackPane>
