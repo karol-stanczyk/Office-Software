@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.StackPane?>
+<StackPane id="top-menu"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.layout.topmenu.TopMenuPresenter">
+    <MenuBar>
+        <Menu text="%top.menu.file">
+            <MenuItem text="%top.menu.exit" onAction="#exit"/>
+        </Menu>
+    </MenuBar>
+</StackPane>

@@ -10,22 +10,29 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = Contractor.FIND_ALL, query = "select u from Contractor u"),
         @NamedQuery(name = Contractor.FIND_BY_NAME, query = "select u from Contractor u where u.name = :name"),
-        @NamedQuery(name = Contractor.FIND_BY_PESEL, query = "select u from Contractor u where u.pesel = :pesel")
+        @NamedQuery(name = Contractor.FIND_BY_PESEL, query = "select u from Contractor u where u.pesel = :pesel"),
+        @NamedQuery(name = Contractor.FIND_BY_LAST_NAME, query = "select u from Contractor u where u.lastName = :ó")
 })
 public class Contractor implements Serializable {
 
     public static final String FIND_ALL = "Contractor.FIND_ALL";
     public static final String FIND_BY_NAME = "Contractor.FIND_BY_NAME";
     public static final String FIND_BY_PESEL = "Contractor.FIND_BY_PESEL";
+    public static final String FIND_BY_LAST_NAME = "Contractor.FIND_BY_LAST_NAME";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column
     private String name;
+    @Column
     private String lastName;
+    @Column
     private String address;
+    @Column(unique = true)
     private String pesel;
+    @Column(unique = true)
     private String nip;
 
     @OneToMany(mappedBy = "contractor")
