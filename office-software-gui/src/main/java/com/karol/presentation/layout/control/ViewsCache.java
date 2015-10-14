@@ -20,8 +20,10 @@ public class ViewsCache {
         newContractorView = contractorView.getView();
     }
 
-    public static Parent getNewContractorView() {
-        newContractorPresenter.cleanForm();
+    public static Parent getNewContractorView(boolean cleanForm) {
+        if (cleanForm) {
+            newContractorPresenter.cleanForm();
+        }
         return newContractorView;
     }
 }
