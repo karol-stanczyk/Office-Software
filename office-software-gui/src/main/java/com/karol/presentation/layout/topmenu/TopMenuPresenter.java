@@ -1,6 +1,7 @@
 package com.karol.presentation.layout.topmenu;
 
 import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.layout.control.ViewsCache;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -19,7 +20,7 @@ public class TopMenuPresenter implements Initializable {
 
     @FXML
     public void newContractor() {
-        //TODO(Karol S.) redirect to new contractor
+        layoutService.showView(ViewsCache.getNewContractorView());
     }
 
     @FXML

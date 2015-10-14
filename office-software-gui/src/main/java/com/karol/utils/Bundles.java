@@ -1,6 +1,7 @@
 package com.karol.utils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class Bundles {
@@ -19,5 +20,13 @@ public class Bundles {
 
     public static String get(String key) {
         return properties.getProperty(key);
+    }
+
+    public static String get(String key, String... values){
+        String property = get(key);
+        for (int i = 0; i < values.length; i++){
+            property = property.replace("{"+i+"}", values[i]);
+        }
+        return property;
     }
 }

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@SuppressWarnings("unused")
 @NamedQueries({
         @NamedQuery(name = Contractor.FIND_ALL, query = "select u from Contractor u"),
         @NamedQuery(name = Contractor.FIND_BY_NAME, query = "select u from Contractor u where u.name = :name"),
         @NamedQuery(name = Contractor.FIND_BY_PESEL, query = "select u from Contractor u where u.pesel = :pesel"),
-        @NamedQuery(name = Contractor.FIND_BY_LAST_NAME, query = "select u from Contractor u where u.lastName = :ó")
+        @NamedQuery(name = Contractor.FIND_BY_LAST_NAME, query = "select u from Contractor u where u.lastName = :lastName"),
+        @NamedQuery(name = Contractor.FIND_BY_NIP, query = "select u from Contractor u where u.nip = :nip")
 })
 public class Contractor implements Serializable {
 
@@ -19,6 +19,7 @@ public class Contractor implements Serializable {
     public static final String FIND_BY_NAME = "Contractor.FIND_BY_NAME";
     public static final String FIND_BY_PESEL = "Contractor.FIND_BY_PESEL";
     public static final String FIND_BY_LAST_NAME = "Contractor.FIND_BY_LAST_NAME";
+    public static final String FIND_BY_NIP = "Contractor.FIND_BY_NIP";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

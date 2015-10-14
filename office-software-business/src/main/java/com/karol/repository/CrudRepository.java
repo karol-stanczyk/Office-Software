@@ -74,7 +74,8 @@ public class CrudRepository<T> {
         for (Map.Entry<String, Object> entry : parameters.entrySet()) {
             query.setParameter(entry.getKey(), entry.getValue());
         }
+        List result = query.getResultList();
         manager.close();
-        return query.getResultList();
+        return result;
     }
 }

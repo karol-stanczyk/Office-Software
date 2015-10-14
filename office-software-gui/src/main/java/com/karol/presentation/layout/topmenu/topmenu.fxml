@@ -6,12 +6,12 @@
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.karol.presentation.layout.topmenu.TopMenuPresenter">
     <MenuBar>
-        <Menu text="%top.menu.file">
-            <MenuItem text="%top.menu.exit" onAction="#exit"/>
+        <Menu text="%file">
+            <MenuItem text="%exit" onAction="#exit"/>
         </Menu>
-        <Menu text="%top.menu.contractors">
-            <MenuItem text="%top.menu.contractors.new" onAction="#newContractor"/>
-            <MenuItem text="%top.menu.contractors.list" onAction="#contractorList"/>
+        <Menu text="%contractors">
+            <MenuItem text="%contractors.new" onAction="#newContractor"/>
+            <MenuItem text="%contractors.list" onAction="#contractorList"/>
         </Menu>
     </MenuBar>
 </StackPane>

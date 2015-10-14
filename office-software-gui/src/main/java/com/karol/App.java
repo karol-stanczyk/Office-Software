@@ -3,6 +3,7 @@ package com.karol;
 import com.airhacks.afterburner.injection.Injector;
 import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.layout.control.ViewsCache;
 import com.karol.utils.Bundles;
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
@@ -17,9 +18,13 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Localization.setLocale(new Locale("PL","PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
+
+        ViewsCache.init();
+
         layoutService.setApplicationStage(stage);
         setCloseEvent(stage, layoutService);
         configureApplicationStage(stage);
+
         stage.show();
     }
 

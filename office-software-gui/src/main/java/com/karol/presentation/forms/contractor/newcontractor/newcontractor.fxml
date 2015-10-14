@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<StackPane id="new-contractor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.contractor.newcontractor.NewContractorPresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <Label styleClass="form-header-text" text="%new.contractor" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+
+        <GridPane hgap="7.0" vgap="5.0" GridPane.rowIndex="1">
+            <Label styleClass="field-label" text="%contractor.name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="contractorName" id="%contractor.name" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label styleClass="field-label" text="%contractor.lastName" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="contractorLastName" id="%contractor.lastName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label styleClass="field-label" text="%contractor.address" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="contractorAddress" id="%contractor.address" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label styleClass="field-label" text="%contractor.pesel" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField fx:id="contractorPesel" id="%contractor.pesel" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label styleClass="field-label" text="%contractor.nip" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField fx:id="contractorNip" id="%contractor.nip" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+            <Button text="%save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+        </GridPane>
+    </GridPane>
+</StackPane>

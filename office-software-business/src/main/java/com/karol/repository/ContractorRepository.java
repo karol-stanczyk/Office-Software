@@ -19,9 +19,15 @@ public class ContractorRepository {
         return Optional.ofNullable(contractorRepository.find(Contractor.class, id));
     }
 
-    public Optional<Contractor> findByPese(String pesel) {
+    public Optional<Contractor> findByPesel(String pesel) {
         return contractorRepository.findWithNamedQuery(
-                Contractor.FIND_BY_PESEL, QueryParameter.with("psesl", pesel).parameters()
+                Contractor.FIND_BY_PESEL, QueryParameter.with("pesel", pesel).parameters()
+        ).stream().findFirst();
+    }
+
+    public Optional<Contractor> findByNip(String nip) {
+        return contractorRepository.findWithNamedQuery(
+                Contractor.FIND_BY_NIP, QueryParameter.with("nip", nip).parameters()
         ).stream().findFirst();
     }
 
@@ -37,7 +43,13 @@ public class ContractorRepository {
         );
     }
 
-    public Contractor persist(Contractor contractor) {
+    public Contractor persist(Contractor contractor) throws DatabaseException {
+        if (findByPesel(contractor.getPesel()).isPresent()) {
+            throw new DatabaseException("pesel.constraints.exception");
+        }
+        if (findByNip(contractor.getNip()).isPresent()) {
+            throw new DatabaseException("nip.constraints.exception");
+        }
         return contractorRepository.persist(contractor);
     }
 
