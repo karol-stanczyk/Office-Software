@@ -2,6 +2,7 @@ package com.karol.presentation.forms.contractor.newcontractor;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
+import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.Validator;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
@@ -11,6 +12,7 @@ import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
@@ -19,27 +21,25 @@ import java.util.ResourceBundle;
 
 public class NewContractorPresenter implements Initializable, Cleanable, Validator {
 
-    @FXML
-    private TextField contractorName;
-    @FXML
-    private TextField contractorLastName;
-    @FXML
-    private TextField contractorAddress;
-    @FXML
-    private TextField contractorPesel;
-    @FXML
-    private TextField contractorNip;
+    @FXML private TextField contractorName;
+    @FXML private TextField contractorLastName;
+    @FXML private TextField contractorAddress;
+    @FXML private TextField contractorPesel;
+    @FXML private TextField contractorNip;
+    @FXML private Label formHeaderText;
 
     @Inject
     private NotificationsService notificationsService;
     @Inject
     private ContractorRepository contractorRepository;
 
+    private FormMode formMode;
 
     private ResourceBundle bundle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.formMode = FormMode.NEW;
         this.bundle = resourceBundle;
     }
 
@@ -87,5 +87,23 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
                 .forField(contractorAddress).notEmpty().validate()
                 .forField(contractorPesel).notEmpty().onlyNumbers().validate()
                 .forField(contractorNip).notEmpty().onlyNumbers().validate();
+    }
+
+    public void setFormMode(FormMode formMode) {
+        this.formMode = formMode;
+        applyFormMode();
+    }
+
+    private void applyFormMode() {
+        switch (formMode) {
+            case NEW: {
+                formHeaderText.setText(bundle.getString("new.contractor"));
+            }
+            break;
+            case EDIT: {
+                formHeaderText.setText(bundle.getString("new.contractor.edit"));
+            }
+            break;
+        }
     }
 }

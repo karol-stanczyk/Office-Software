@@ -10,13 +10,18 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.management.OperationsException;
+import java.io.File;
 import java.util.Locale;
 
 public class App extends Application {
 
+    public static final String DATABASE_DIRECTORY = "C:\\Office-Software";
+
     @Override
     public void start(Stage stage) throws Exception {
-        Localization.setLocale(new Locale("PL","PL"));
+        createDatabaseDirectory();
+        Localization.setLocale(new Locale("pl", "PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
 
         ViewsCache.init();
@@ -48,6 +53,13 @@ public class App extends Application {
         });
     }
 
+    private void createDatabaseDirectory() throws Exception {
+        File file = new File(DATABASE_DIRECTORY);
+        if (!file.exists()) {
+            boolean directoryCreated = file.mkdir();
+            if(!directoryCreated) throw new Exception();
+        }
+    }
 
     @Override
     public void stop() throws Exception {

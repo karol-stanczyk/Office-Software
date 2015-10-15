@@ -11,7 +11,7 @@
         <padding>
             <Insets top="20.0"/>
         </padding>
-        <Label styleClass="form-header-text" text="%new.contractor" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+        <Label fx:id="formHeaderText" styleClass="form-header-text" text="%new.contractor" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
 
         <GridPane hgap="7.0" vgap="5.0" GridPane.rowIndex="1">
             <Label styleClass="field-label" text="%contractor.name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>

@@ -1,5 +1,6 @@
 package com.karol.presentation.layout.topmenu;
 
+import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.layout.control.ViewsCache;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ public class TopMenuPresenter implements Initializable {
 
     @FXML
     public void newContractor() {
-        layoutService.showView(ViewsCache.getNewContractorView(true));
+        layoutService.showView(ViewsCache.getNewContractorView(true, FormMode.NEW));
     }
 
     @FXML

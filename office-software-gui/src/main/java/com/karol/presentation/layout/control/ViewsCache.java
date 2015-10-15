@@ -1,6 +1,8 @@
 package com.karol.presentation.layout.control;
 
 
+import com.karol.model.Contractor;
+import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.contractor.contractorlist.ContractorListPresenter;
 import com.karol.presentation.forms.contractor.contractorlist.ContractorListView;
 import com.karol.presentation.forms.contractor.newcontractor.NewContractorPresenter;
@@ -31,10 +33,11 @@ public class ViewsCache {
         contractorListView = contractorListFxmlView.getView();
     }
 
-    public static Parent getNewContractorView(boolean cleanForm) {
+    public static Parent getNewContractorView(boolean cleanForm, FormMode mode) {
         if (cleanForm) {
             newContractorPresenter.cleanForm();
         }
+        newContractorPresenter.setFormMode(mode);
         return newContractorView;
     }
 
