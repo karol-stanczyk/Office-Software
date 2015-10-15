@@ -25,7 +25,7 @@ public class TopMenuPresenter implements Initializable {
 
     @FXML
     public void contractorList() {
-        //TODO(Karol S.) redirect to contractor list
+        layoutService.showView(ViewsCache.getContractorListView(true));
     }
 
     @FXML

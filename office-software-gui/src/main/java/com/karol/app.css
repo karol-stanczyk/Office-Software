@@ -33,6 +33,14 @@ TextField {
     -fx-border-color: white;
 }
 
+Button {
+    -fx-background-radius: 0, 0, 0, 0;
+}
+
+TableView .table-column {
+    -fx-alignment: center;
+}
+
 .error-text-field {
     -fx-background-color: #FFF0F0;
     -fx-border-color: #DBB1B1;
@@ -46,4 +54,13 @@ TextField {
 .form-header-text {
     -fx-font: 20px "Times New Roman";
     -fx-font-weight: bold;
+}
+
+.bordered-element {
+    -fx-border-width: 1px;
+    -fx-border-color: blue;
+}
+
+.contractor-list-filter-margin {
+    -fx-padding: 0 50 0 0;
 }
