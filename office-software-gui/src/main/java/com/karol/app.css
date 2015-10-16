@@ -37,6 +37,10 @@ Button {
     -fx-background-radius: 0, 0, 0, 0;
 }
 
+.action-button {
+    -fx-pref-width: 100px;
+}
+
 TableView .table-column {
     -fx-alignment: center;
 }

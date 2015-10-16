@@ -1,10 +1,9 @@
 package com.karol.presentation.layout.control;
 
 import com.karol.presentation.layout.LayoutPresenter;
+import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 public class LayoutService {
@@ -13,13 +12,7 @@ public class LayoutService {
     private LayoutPresenter layoutPresenter;
 
     public void closeApplication() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
-        alert.setTitle(Bundles.get("application.close.title"));
-        alert.setHeaderText(null);
-        alert.setContentText(Bundles.get("application.close.contentText"));
-        alert.showAndWait()
-                .filter(result -> result == ButtonType.YES)
-                .ifPresent(result -> applicationStage.close());
+        ActionUtils.showConfirmation(Bundles.get("application.close.contentText"), applicationStage::close);
     }
 
     public void showView(Parent parent) {

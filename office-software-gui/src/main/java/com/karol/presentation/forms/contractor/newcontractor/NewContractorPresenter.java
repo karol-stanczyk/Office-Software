@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class NewContractorPresenter implements Initializable, Cleanable, Validator {
@@ -33,7 +34,9 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     @Inject
     private ContractorRepository contractorRepository;
 
+    // FormMode variables
     private FormMode formMode;
+    private Contractor editContractor;
 
     private ResourceBundle bundle;
 
@@ -49,7 +52,11 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
         if (validator.valid()) {
             Contractor contractor = createContractor();
             try {
-                contractorRepository.persist(contractor);
+                if(formMode.equals(FormMode.EDIT)) {
+                    contractorRepository.update(contractor);
+                } else {
+                    contractorRepository.persist(contractor);
+                }
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
                 cleanForm();
             } catch (DatabaseException e) {
@@ -61,7 +68,12 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     }
 
     private Contractor createContractor() {
-        Contractor contractor = new Contractor();
+        Contractor contractor;
+        if(formMode.equals(FormMode.EDIT)) {
+            contractor = editContractor;
+        } else {
+            contractor = new Contractor();
+        }
         contractor.setName(contractorName.getText());
         contractor.setLastName(contractorLastName.getText());
         contractor.setAddress(contractorAddress.getText());
@@ -92,6 +104,17 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     public void setFormMode(FormMode formMode) {
         this.formMode = formMode;
         applyFormMode();
+    }
+
+    public void setEditContractor(Optional<Contractor> editContractor) {
+        editContractor.ifPresent(contractor -> {
+            this.editContractor = contractor;
+            contractorName.setText(contractor.getName());
+            contractorLastName.setText(contractor.getLastName());
+            contractorAddress.setText(contractor.getAddress());
+            contractorPesel.setText(contractor.getPesel());
+            contractorNip.setText(contractor.getNip());
+        });
     }
 
     private void applyFormMode() {
