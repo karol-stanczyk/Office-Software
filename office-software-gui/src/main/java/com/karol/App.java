@@ -4,9 +4,11 @@ import com.airhacks.afterburner.injection.Injector;
 import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.services.NavigationService;
 import com.karol.utils.Bundles;
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -40,7 +42,9 @@ public class App extends Application {
     }
 
     public Scene createMainScene() {
-        Scene scene = new Scene(new LayoutView().getView());
+        Parent startView  = new LayoutView().getView();
+        NavigationService.setCurrentState(startView);
+        Scene scene = new Scene(startView);
         final String uri = getClass().getResource("app.css").toExternalForm();
         scene.getStylesheets().add(uri);
         return scene;

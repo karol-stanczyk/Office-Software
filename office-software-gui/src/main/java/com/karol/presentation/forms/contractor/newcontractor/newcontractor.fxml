@@ -29,7 +29,10 @@
             <Label styleClass="field-label" text="%contractor.nip" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
             <TextField fx:id="contractorNip" id="%contractor.nip" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
-            <Button text="%save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+                <Button text="Powrot" onAction="#goBack" GridPane.columnIndex="0"/>
+                <Button text="%save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>
+            </GridPane>
         </GridPane>
     </GridPane>
 </StackPane>

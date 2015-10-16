@@ -2,14 +2,13 @@ package com.karol.presentation.forms.contractor.contractorlist;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
-import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.layout.control.ViewsCache;
 import com.karol.repository.ContractorRepository;
 import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
-import com.karol.utils.NotificationsService;
+import com.karol.presentation.services.NotificationsService;
 import com.karol.utils.VoidFunction;
 import com.karol.utils.validation.FieldsValidator;
 import javafx.collections.FXCollections;
@@ -23,10 +22,7 @@ import javax.inject.Inject;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

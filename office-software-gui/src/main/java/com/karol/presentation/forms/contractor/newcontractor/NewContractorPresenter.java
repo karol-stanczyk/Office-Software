@@ -5,12 +5,12 @@ import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.FormModeRunner;
 import com.karol.presentation.forms.Validator;
+import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.services.NavigationService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
 import com.karol.utils.Bundles;
-import com.karol.utils.NotificationsService;
-import com.karol.utils.VoidDatabaseFunction;
-import com.karol.utils.VoidFunction;
+import com.karol.presentation.services.NotificationsService;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.fxml.FXML;
@@ -20,7 +20,6 @@ import javafx.scene.control.TextField;
 
 import javax.inject.Inject;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class NewContractorPresenter implements Initializable, Cleanable, Validator {
@@ -36,6 +35,8 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     private NotificationsService notificationsService;
     @Inject
     private ContractorRepository contractorRepository;
+    @Inject
+    private LayoutService layoutService;
 
     // FormMode variables
     private FormMode formMode;
@@ -67,6 +68,11 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
         } else {
             notificationsService.showError(validator.getErrorString(), 5);
         }
+    }
+
+    @FXML
+    public void goBack() {
+        layoutService.showView(NavigationService.getPreviousState());
     }
 
     private Contractor createContractor() {
