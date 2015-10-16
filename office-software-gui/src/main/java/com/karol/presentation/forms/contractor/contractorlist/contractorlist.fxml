@@ -65,7 +65,7 @@
         </HBox>
         <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
             <GridPane alignment="BASELINE_RIGHT" hgap="5.0" vgap="2.0" styleClass="contractor-list-filter-margin">
-                <Button text="%contractor.list.button.details" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="action-button"/>
+                <Button text="%contractor.list.button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="action-button"/>
                 <Button text="%contractor.list.button.delete" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#deleteContractor" styleClass="action-button"/>
                 <Button text="%contractor.list.button.edit" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#editContractor" styleClass="action-button"/>
             </GridPane>

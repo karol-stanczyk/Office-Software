@@ -3,11 +3,14 @@ package com.karol.presentation.forms.contractor.newcontractor;
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.FormMode;
+import com.karol.presentation.forms.FormModeRunner;
 import com.karol.presentation.forms.Validator;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.NotificationsService;
+import com.karol.utils.VoidDatabaseFunction;
+import com.karol.utils.VoidFunction;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.fxml.FXML;
@@ -52,11 +55,10 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
         if (validator.valid()) {
             Contractor contractor = createContractor();
             try {
-                if(formMode.equals(FormMode.EDIT)) {
-                    contractorRepository.update(contractor);
-                } else {
-                    contractorRepository.persist(contractor);
-                }
+                FormModeRunner.runWithException(
+                        () -> contractorRepository.persist(contractor),
+                        () -> contractorRepository.update(contractor),
+                        formMode);
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
                 cleanForm();
             } catch (DatabaseException e) {
@@ -84,11 +86,13 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
 
     @Override
     public void cleanForm() {
+        editContractor = null;
         contractorName.setText("");
         contractorLastName.setText("");
         contractorAddress.setText("");
         contractorPesel.setText("");
         contractorNip.setText("");
+        FieldsValidator.removeErrorStyleClasses(contractorName, contractorLastName, contractorAddress, contractorPesel, contractorNip);
     }
 
     @Override
@@ -106,27 +110,19 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
         applyFormMode();
     }
 
-    public void setEditContractor(Optional<Contractor> editContractor) {
-        editContractor.ifPresent(contractor -> {
-            this.editContractor = contractor;
-            contractorName.setText(contractor.getName());
-            contractorLastName.setText(contractor.getLastName());
-            contractorAddress.setText(contractor.getAddress());
-            contractorPesel.setText(contractor.getPesel());
-            contractorNip.setText(contractor.getNip());
-        });
+    public void setEditContractor(Contractor contractor) {
+        this.editContractor = contractor;
+        contractorName.setText(contractor.getName());
+        contractorLastName.setText(contractor.getLastName());
+        contractorAddress.setText(contractor.getAddress());
+        contractorPesel.setText(contractor.getPesel());
+        contractorNip.setText(contractor.getNip());
     }
 
     private void applyFormMode() {
-        switch (formMode) {
-            case NEW: {
-                formHeaderText.setText(bundle.getString("new.contractor"));
-            }
-            break;
-            case EDIT: {
-                formHeaderText.setText(bundle.getString("new.contractor.edit"));
-            }
-            break;
-        }
+        FormModeRunner.run(
+                () -> formHeaderText.setText(bundle.getString("new.contractor")),
+                () -> formHeaderText.setText(bundle.getString("new.contractor.edit")),
+                formMode);
     }
 }

@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextFieldsValidator implements FieldsValidator {
+public class TextFieldsValidator extends FieldsValidator {
 
     private List<String> validationMessageList;
     private boolean validationState = true;
@@ -89,7 +89,7 @@ public class TextFieldsValidator implements FieldsValidator {
         private void setFieldValidationStyle(boolean validationResult, String errorBundleKey) {
             if (!validationResult) {
                 addValidationMessage(field, errorBundleKey);
-                addStyle(field, "error-text-field");
+                addStyle(field, FieldsValidator.ERROR_STYLE);
             }
         }
     }

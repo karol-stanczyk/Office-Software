@@ -34,16 +34,20 @@ public class ViewsCache {
         contractorListView = contractorListFxmlView.getView();
     }
 
-    public static Parent getNewContractorView(boolean cleanForm, FormMode mode) {
-        return getNewContractorView(cleanForm, mode, Optional.empty());
+    public static Parent getNewContractorView() {
+        return getNewContractorView(FormMode.NEW, Optional.empty());
     }
 
-    public static Parent getNewContractorView(boolean cleanForm, FormMode mode, Optional<Contractor> contractor) {
-        if (cleanForm) {
-            newContractorPresenter.cleanForm();
-        }
+    public static Parent getNewContractorView(Contractor contractor) {
+        return getNewContractorView(FormMode.EDIT, Optional.of(contractor));
+    }
+
+    private static Parent getNewContractorView(FormMode mode, Optional<Contractor> contractor) {
         newContractorPresenter.setFormMode(mode);
-        newContractorPresenter.setEditContractor(contractor);
+        newContractorPresenter.cleanForm();
+        if (contractor.isPresent()) {
+            newContractorPresenter.setEditContractor(contractor.get());
+        }
         return newContractorView;
     }
 

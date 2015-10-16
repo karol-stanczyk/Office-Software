@@ -82,7 +82,7 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
     public void editContractor() {
         actionWithContractorSelected(() -> {
             Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
-            layoutService.showView(ViewsCache.getNewContractorView(true, FormMode.EDIT, Optional.of(contractor)));
+            layoutService.showView(ViewsCache.getNewContractorView(contractor));
         });
     }
 
@@ -115,7 +115,12 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
                 contractorsTable.setItems(
                         FXCollections.observableList(
                                 contractorTableRows().stream()
-                                        .filter(row -> row.toString().contains(newValue))
+                                        .filter(row -> {
+                                            String r = row.toString().toUpperCase();
+                                            String f = newValue.toUpperCase();
+                                            boolean result = r.contains(f);
+                                            return result;
+                                        })
                                         .collect(Collectors.toList()))
                 );
             }

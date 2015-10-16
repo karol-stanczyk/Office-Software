@@ -46,15 +46,9 @@ public class ContractorTableRow extends AbstractTableRow {
         return nip;
     }
 
+    //Needed for table filter search
     @Override
     public String toString() {
-        return "ContractorTableRow{" +
-                "contractor=" + contractor +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", pesel='" + pesel + '\'' +
-                ", nip='" + nip + '\'' +
-                '}';
+        return name + " " + lastName + " " + address + " " + pesel + " " + nip;
     }
 }
