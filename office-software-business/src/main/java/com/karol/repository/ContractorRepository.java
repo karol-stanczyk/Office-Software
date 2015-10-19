@@ -44,16 +44,23 @@ public class ContractorRepository {
     }
 
     public Contractor persist(Contractor contractor) throws DatabaseException {
-        if (findByPesel(contractor.getPesel()).isPresent()) {
-            throw new DatabaseException("pesel.constraints.exception");
-        }
-        if (findByNip(contractor.getNip()).isPresent()) {
-            throw new DatabaseException("nip.constraints.exception");
-        }
+        checkPersistingInDatabase(contractor);
         return contractorRepository.persist(contractor);
     }
 
-    public Contractor update(Contractor contractor) {
+    private void checkPersistingInDatabase(Contractor contractor) throws DatabaseException {
+        Optional<Contractor> contractorPesel = findByPesel(contractor.getPesel());
+        if (!contractor.getPesel().equals("") && contractorPesel.isPresent() && !contractorPesel.get().getId().equals(contractor.getId())) {
+            throw new DatabaseException("pesel.constraints.exception");
+        }
+        if (!contractor.getNip().equals("") && findByNip(contractor.getNip()).isPresent()) {
+            throw new DatabaseException("nip.constraints.exception");
+        }
+    }
+
+
+    public Contractor update(Contractor contractor) throws DatabaseException {
+        checkPersistingInDatabase(contractor);
         return contractorRepository.update(contractor);
     }
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<StackPane id="new-contractor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.contract.contractlist.ContractListPresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <HBox alignment="CENTER" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+            <Label styleClass="form-header-text" text="%contract.list.header" alignment="CENTER"/>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+            <GridPane hgap="5.0">
+                <Label fx:id="contractorName" GridPane.columnIndex="0" styleClass="underlined-label"/>
+                <Label fx:id="contractorLastName" GridPane.columnIndex="1" styleClass="underlined-label"/>
+            </GridPane>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
+            <TableView fx:id="contractListTable" prefHeight="560.0" focusTraversable="false">
+                <columns>
+                    <TableColumn text="%contract.list.index" prefWidth="40.0">
+                        <cellValueFactory >
+                            <PropertyValueFactory property="index"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="%contract.list.period" prefWidth="150.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="period"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="%contract.list.number" prefWidth="150.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="number"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="%contract.list.validityPeriod" prefWidth="300.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="validityPeriod"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="%contract.list.paymentDate" prefWidth="150.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="paymentDate"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </HBox>
+        <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
+            <!--<GridPane alignment="BASELINE_RIGHT" hgap="5.0" vgap="2.0" styleClass="contractor-list-filter-margin">-->
+                <!--<Button text="%contractor.list.button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#showContracts" styleClass="action-button"/>-->
+                <!--<Button text="%contractor.list.button.edit" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#editContractor" styleClass="action-button"/>-->
+                <!--<Button text="%contractor.list.button.delete" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#deleteContractor" styleClass="action-button"/>-->
+            <!--</GridPane>-->
+        </HBox>
+    </GridPane>
+</StackPane>

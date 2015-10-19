@@ -2,34 +2,34 @@ package com.karol.presentation.forms.contractor.contractorlist;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
-import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
-import com.karol.presentation.services.NotificationsService;
 import com.karol.utils.VoidFunction;
-import com.karol.utils.validation.FieldsValidator;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 
 import javax.inject.Inject;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ContractorListPresenter implements Initializable, Cleanable, Validator {
+public class ContractorListPresenter implements Initializable, Cleanable {
 
-    @FXML private TextField contractorListFilter;
-    @FXML private TableView<ContractorTableRow> contractorsTable;
+    @FXML
+    private TextField contractorListFilter;
+    @FXML
+    private TableView<ContractorTableRow> contractorsTable;
 
     @Inject
     private ContractorRepository contractorRepository;
@@ -46,14 +46,24 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
         this.bundle = resourceBundle;
         initializeFilter();
         contractorsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        initializeOnRowDoubleClickListener();
         refreshTable();
     }
 
+    private void initializeOnRowDoubleClickListener() {
+        contractorsTable.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                if (mouseEvent.getClickCount() == 2) {
+                    showContracts();
+                }
+            }
+        });
+    }
+
     private List<ContractorTableRow> contractorTableRows() {
-        List<ContractorTableRow> result = new ArrayList<>();
-        IntStream.range(0, contractorList.size())
-                .forEach(i -> result.add(new ContractorTableRow(contractorList.get(i), i)));
-        return result;
+        return  IntStream.range(0, contractorList.size())
+                .mapToObj(index -> new ContractorTableRow(contractorList.get(index), index))
+                .collect(Collectors.toList());
     }
 
     @FXML
@@ -65,12 +75,12 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
     @FXML
     public void deleteContractor() {
         ActionUtils.showConfirmation(Bundles.get("confirmation.contractors.delete"), () ->
-            actionWithContractorSelected(() -> {
-                contractorsTable.getSelectionModel().getSelectedItems().stream()
-                        .forEach(row -> contractorRepository.delete(row.getContractor()));
-                refreshTable();
-                notificationsService.showInformation(bundle.getString("contractor.delete.success"));
-            })
+                        actionWithContractorSelected(() -> {
+                            contractorsTable.getSelectionModel().getSelectedItems().stream()
+                                    .forEach(row -> contractorRepository.delete(row.getContractor()));
+                            refreshTable();
+                            notificationsService.showInformation(bundle.getString("contractor.delete.success"));
+                        })
         );
     }
 
@@ -78,11 +88,19 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
     public void editContractor() {
         actionWithContractorSelected(() -> {
             Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
-            layoutService.showView(ViewsCache.getNewContractorView(contractor));
+            layoutService.showView(ViewsCache.getNewContractorView(contractor), this);
         });
     }
 
-    public void actionWithContractorSelected(VoidFunction function){
+    @FXML
+    public void showContracts() {
+        actionWithContractorSelected(() -> {
+            Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
+            layoutService.showView(ViewsCache.getContractListView(contractor));
+        });
+    }
+
+    public void actionWithContractorSelected(VoidFunction function) {
         if (isRowSelected()) {
             function.run();
         } else {
@@ -94,11 +112,6 @@ public class ContractorListPresenter implements Initializable, Cleanable, Valida
     public void cleanForm() {
         refreshTable();
         contractorListFilter.setText("");
-    }
-
-    @Override
-    public FieldsValidator validate() {
-        return null;
     }
 
     private boolean isRowSelected() {

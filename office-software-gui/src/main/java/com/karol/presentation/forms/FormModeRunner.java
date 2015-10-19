@@ -6,7 +6,7 @@ import com.karol.utils.VoidFunction;
 
 public class FormModeRunner {
 
-    public static void runWithException(VoidDatabaseFunction newMode, VoidFunction editMode, FormMode mode) throws DatabaseException {
+    public static void runWithException(VoidDatabaseFunction newMode, VoidDatabaseFunction editMode, FormMode mode) throws DatabaseException {
         switch (mode) {
             case NEW:
                 newMode.run();

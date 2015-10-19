@@ -1,11 +1,9 @@
 package com.karol.presentation.forms.contractor.newcontractor;
 
 import com.karol.model.Contractor;
-import com.karol.presentation.forms.Cleanable;
-import com.karol.presentation.forms.FormMode;
-import com.karol.presentation.forms.FormModeRunner;
-import com.karol.presentation.forms.Validator;
+import com.karol.presentation.forms.*;
 import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.layout.control.ViewsCache;
 import com.karol.presentation.services.NavigationService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
@@ -13,8 +11,11 @@ import com.karol.utils.Bundles;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -30,6 +31,7 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     @FXML private TextField contractorPesel;
     @FXML private TextField contractorNip;
     @FXML private Label formHeaderText;
+    @FXML private Button goBackButton;
 
     @Inject
     private NotificationsService notificationsService;
@@ -39,14 +41,14 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
     private LayoutService layoutService;
 
     // FormMode variables
-    private FormMode formMode;
+    private Property<FormMode> formMode;
     private Contractor editContractor;
 
     private ResourceBundle bundle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.formMode = FormMode.NEW;
+        initializeGoBackButton();
         this.bundle = resourceBundle;
     }
 
@@ -59,7 +61,7 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
                 FormModeRunner.runWithException(
                         () -> contractorRepository.persist(contractor),
                         () -> contractorRepository.update(contractor),
-                        formMode);
+                        formMode.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
                 cleanForm();
             } catch (DatabaseException e) {
@@ -72,12 +74,13 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
 
     @FXML
     public void goBack() {
+        NavigationService.getPreviousStatePresenter().ifPresent(Cleanable::cleanForm);
         layoutService.showView(NavigationService.getPreviousState());
     }
 
     private Contractor createContractor() {
         Contractor contractor;
-        if(formMode.equals(FormMode.EDIT)) {
+        if(formMode.getValue().equals(FormMode.EDIT)) {
             contractor = editContractor;
         } else {
             contractor = new Contractor();
@@ -107,12 +110,12 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
                 .forField(contractorName).notEmpty().onlyLetters().validate()
                 .forField(contractorLastName).notEmpty().onlyLetters().validate()
                 .forField(contractorAddress).notEmpty().validate()
-                .forField(contractorPesel).notEmpty().onlyNumbers().validate()
-                .forField(contractorNip).notEmpty().onlyNumbers().validate();
+                .forField(contractorPesel).onlyNumbers().validate()
+                .forField(contractorNip).onlyNumbers().validate();
     }
 
     public void setFormMode(FormMode formMode) {
-        this.formMode = formMode;
+        this.formMode.setValue(formMode);
         applyFormMode();
     }
 
@@ -129,6 +132,19 @@ public class NewContractorPresenter implements Initializable, Cleanable, Validat
         FormModeRunner.run(
                 () -> formHeaderText.setText(bundle.getString("new.contractor")),
                 () -> formHeaderText.setText(bundle.getString("new.contractor.edit")),
-                formMode);
+                formMode.getValue());
+    }
+
+    private void initializeGoBackButton() {
+        this.formMode = new SimpleObjectProperty<>();
+        this.formMode.addListener((observableValue, oldValue, newValue) -> {
+            if (newValue != null) {
+                FormModeRunner.run(
+                        () -> goBackButton.setVisible(false),
+                        () -> goBackButton.setVisible(true),
+                        formMode.getValue());
+            }
+        });
+        this.formMode.setValue(FormMode.NEW);
     }
 }

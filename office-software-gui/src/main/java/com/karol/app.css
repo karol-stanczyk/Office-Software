@@ -68,3 +68,7 @@ TableView .table-column {
 .contractor-list-filter-margin {
     -fx-padding: 0 50 0 0;
 }
+
+.underlined-label {
+    -fx-underline: true;
+}

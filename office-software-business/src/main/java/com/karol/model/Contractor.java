@@ -31,9 +31,8 @@ public class Contractor implements Serializable {
     private String lastName;
     @Column
     private String address;
-    @Column(unique = true)
+
     private String pesel;
-    @Column(unique = true)
     private String nip;
 
     @OneToMany(mappedBy = "contractor")

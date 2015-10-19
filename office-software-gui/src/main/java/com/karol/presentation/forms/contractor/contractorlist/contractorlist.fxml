@@ -28,7 +28,7 @@
             </GridPane>
         </HBox>
         <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
-            <TableView fx:id="contractorsTable" prefHeight="560.0">
+            <TableView fx:id="contractorsTable" prefHeight="560.0" focusTraversable="false">
                 <columns>
                     <TableColumn text="%contractor.index" prefWidth="40.0">
                         <cellValueFactory >
@@ -65,9 +65,9 @@
         </HBox>
         <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
             <GridPane alignment="BASELINE_RIGHT" hgap="5.0" vgap="2.0" styleClass="contractor-list-filter-margin">
-                <Button text="%contractor.list.button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="action-button"/>
-                <Button text="%contractor.list.button.delete" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#deleteContractor" styleClass="action-button"/>
-                <Button text="%contractor.list.button.edit" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#editContractor" styleClass="action-button"/>
+                <Button text="%contractor.list.button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#showContracts" styleClass="action-button"/>
+                <Button text="%contractor.list.button.edit" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#editContractor" styleClass="action-button"/>
+                <Button text="%contractor.list.button.delete" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#deleteContractor" styleClass="action-button"/>
             </GridPane>
         </HBox>
     </GridPane>
