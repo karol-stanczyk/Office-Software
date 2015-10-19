@@ -21,7 +21,10 @@
                 <Label fx:id="contractorLastName" GridPane.columnIndex="1" styleClass="underlined-label"/>
             </GridPane>
         </HBox>
-        <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
+        <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" styleClass="contractor-list-filter-margin">
+            <Button text="%new.contract" styleClass="long-action-button" />
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
             <TableView fx:id="contractListTable" prefHeight="560.0" focusTraversable="false">
                 <columns>
                     <TableColumn text="%contract.list.index" prefWidth="40.0">
@@ -29,17 +32,17 @@
                             <PropertyValueFactory property="index"/>
                         </cellValueFactory>
                     </TableColumn>
+                    <TableColumn text="%contract.list.number" prefWidth="450.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="number"/>
+                        </cellValueFactory>
+                    </TableColumn>
                     <TableColumn text="%contract.list.period" prefWidth="150.0">
                         <cellValueFactory>
                             <PropertyValueFactory property="period"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="%contract.list.number" prefWidth="150.0">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="number"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="%contract.list.validityPeriod" prefWidth="300.0">
+                    <TableColumn text="%contract.list.validityPeriod" prefWidth="150.0">
                         <cellValueFactory>
                             <PropertyValueFactory property="validityPeriod"/>
                         </cellValueFactory>

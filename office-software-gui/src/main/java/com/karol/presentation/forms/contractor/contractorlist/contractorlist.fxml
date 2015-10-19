@@ -28,7 +28,7 @@
             </GridPane>
         </HBox>
         <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
-            <TableView fx:id="contractorsTable" prefHeight="560.0" focusTraversable="false">
+            <TableView fx:id="contractorsTable" prefHeight="560.0" focusTraversable="false" >
                 <columns>
                     <TableColumn text="%contractor.index" prefWidth="40.0">
                         <cellValueFactory >

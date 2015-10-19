@@ -41,6 +41,10 @@ Button {
     -fx-pref-width: 100px;
 }
 
+.long-action-button {
+    -fx-pref-width: 130px;
+}
+
 TableView .table-column {
     -fx-alignment: center;
 }
