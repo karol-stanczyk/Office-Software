@@ -1,14 +1,16 @@
 package com.karol.presentation.forms.contractor.newcontractor;
 
 import com.karol.model.Contractor;
-import com.karol.presentation.forms.*;
+import com.karol.presentation.forms.Cleanable;
+import com.karol.presentation.forms.FormMode;
+import com.karol.presentation.forms.FormModeRunner;
+import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.layout.control.ViewsCache;
 import com.karol.presentation.services.NavigationService;
+import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
 import com.karol.utils.Bundles;
-import com.karol.presentation.services.NotificationsService;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.beans.property.Property;

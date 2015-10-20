@@ -22,7 +22,7 @@
             </GridPane>
         </HBox>
         <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS" styleClass="contractor-list-filter-margin">
-            <Button text="%new.contract" styleClass="long-action-button" />
+            <Button text="%new.contract" styleClass="long-action-button" onAction="#newContract"/>
         </HBox>
         <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
             <TableView fx:id="contractListTable" prefHeight="560.0" focusTraversable="false">

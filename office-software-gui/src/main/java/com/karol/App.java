@@ -10,6 +10,7 @@ import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import javax.management.OperationsException;
@@ -25,7 +26,7 @@ public class App extends Application {
         createDatabaseDirectory();
         Localization.setLocale(new Locale("pl", "PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
-
+        setApplicationIcon(stage);
         ViewsCache.init();
 
         layoutService.setApplicationStage(stage);
@@ -63,6 +64,10 @@ public class App extends Application {
             boolean directoryCreated = file.mkdir();
             if(!directoryCreated) throw new Exception();
         }
+    }
+
+    private void setApplicationIcon(Stage stage) {
+        stage.getIcons().add(new Image(getClass().getClassLoader().getResourceAsStream("app-icon.png")));
     }
 
     @Override

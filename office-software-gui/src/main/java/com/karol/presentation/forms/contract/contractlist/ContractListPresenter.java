@@ -3,12 +3,15 @@ package com.karol.presentation.forms.contract.contractlist;
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
+import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.layout.control.ViewsCache;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
+import javax.inject.Inject;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,6 +26,9 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     private Contractor contractor;
 
+    @Inject
+    private LayoutService layoutService;
+
     @Override
     public void cleanForm() {
         refreshTable();
@@ -30,6 +36,11 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
+
+    @FXML
+    public void newContract() {
+        layoutService.showView(ViewsCache.getNewContractView(contractor));
     }
 
     private void refreshTable() {

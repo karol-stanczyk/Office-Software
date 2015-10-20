@@ -1,10 +1,11 @@
 package com.karol.presentation.layout.control;
 
-import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.contract.contractlist.ContractListPresenter;
 import com.karol.presentation.forms.contract.contractlist.ContractListView;
+import com.karol.presentation.forms.contract.newcontract.NewContractPresenter;
+import com.karol.presentation.forms.contract.newcontract.NewContractView;
 import com.karol.presentation.forms.contractor.contractorlist.ContractorListPresenter;
 import com.karol.presentation.forms.contractor.contractorlist.ContractorListView;
 import com.karol.presentation.forms.contractor.newcontractor.NewContractorPresenter;
@@ -17,15 +18,21 @@ public class ViewsCache {
 
     private static NewContractorPresenter newContractorPresenter;
     private static Parent newContractorView;
+
     private static ContractorListPresenter contractorListPresenter;
     private static Parent contractorListView;
+
     private static ContractListPresenter contractListPresenter;
     private static Parent contractListView;
+
+    private static NewContractPresenter newContractPresenter;
+    private static Parent newContractView;
 
     public static void init() {
         initNewContractorView();
         initContractorListView();
         initContractListView();
+        initNewContractView();
     }
 
     private static void initNewContractorView() {
@@ -44,6 +51,12 @@ public class ViewsCache {
         ContractListView contractListFxmlView = new ContractListView();
         contractListPresenter = (ContractListPresenter) contractListFxmlView.getPresenter();
         contractListView = contractListFxmlView.getView();
+    }
+
+    private static void initNewContractView() {
+        NewContractView contractFxmlView = new NewContractView();
+        newContractPresenter = (NewContractPresenter) contractFxmlView.getPresenter();
+        newContractView = contractFxmlView.getView();
     }
 
     public static Parent getNewContractorView() {
@@ -73,5 +86,12 @@ public class ViewsCache {
     public static Parent getContractListView(Contractor contractor) {
         contractListPresenter.setContractor(contractor);
         return contractListView;
+    }
+
+    public static Parent getNewContractView(Contractor contractor) {
+        newContractPresenter.setFormMode(FormMode.NEW);
+        newContractPresenter.cleanForm();
+        newContractPresenter.setContractor(contractor);
+        return newContractView;
     }
 }

@@ -33,6 +33,22 @@ TextField {
     -fx-border-color: white;
 }
 
+ComboBox {
+    -fx-pref-width: 300px;
+    -fx-background-color: transparent, grey, transparent, white;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+}
+
+DatePicker {
+    -fx-pref-width: 300px;
+    -fx-background-color: transparent, grey, transparent, white;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
+}
+
 Button {
     -fx-background-radius: 0, 0, 0, 0;
 }

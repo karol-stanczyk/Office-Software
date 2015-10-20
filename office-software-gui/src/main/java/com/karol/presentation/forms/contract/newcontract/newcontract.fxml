@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<StackPane id="new-contractor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.contract.newcontract.NewContractPresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <Label fx:id="formHeaderText" styleClass="form-header-text" text="%new.contract" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+
+        <GridPane hgap="7.0" vgap="5.0" GridPane.rowIndex="1">
+            <Label styleClass="field-label" text="%contract.number" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="contractNumber" id="%contract.number" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label styleClass="field-label" text="%contract.period" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="contractPeriod" id="%contract.period" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label styleClass="field-label" text="%contract.validityPeriod" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <DatePicker fx:id="validityPeriod" id="%contract.validityPeriod" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label styleClass="field-label" text="%contract.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <DatePicker fx:id="paymentDate" id="%contract.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+                <!--<Button fx:id="goBackButton" text="%new.contractor.goBack" onAction="#goBack" GridPane.columnIndex="0"/>-->
+                <!--<Button text="%new.contractor.save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>-->
+            </GridPane>
+        </GridPane>
+    </GridPane>
+</StackPane>
