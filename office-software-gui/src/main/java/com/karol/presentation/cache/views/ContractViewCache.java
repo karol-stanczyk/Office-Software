@@ -1,9 +1,9 @@
-package com.karol.presentation.layout.control.cache.views;
+package com.karol.presentation.cache.views;
 
 import com.karol.model.Contractor;
-import com.karol.presentation.forms.FormMode;
-import com.karol.presentation.forms.contract.contract.ContractPresenter;
-import com.karol.presentation.forms.contract.contract.ContractView;
+import com.karol.presentation.forms.contracts.contract.ContractPresenter;
+import com.karol.presentation.forms.contracts.contract.ContractView;
+import com.karol.presentation.navigation.Action;
 import javafx.scene.Parent;
 
 public class ContractViewCache {
@@ -16,7 +16,7 @@ public class ContractViewCache {
     }
 
     public Parent getView(Contractor contractor) {
-        contractPresenter.setFormMode(FormMode.NEW);
+        contractPresenter.setFormMode(Action.NEW);
         contractPresenter.cleanForm();
         contractPresenter.setContractor(contractor);
         return newContractView;
@@ -26,5 +26,9 @@ public class ContractViewCache {
         ContractView contractFxmlView = new ContractView();
         contractPresenter = (ContractPresenter) contractFxmlView.getPresenter();
         newContractView = contractFxmlView.getView();
+    }
+
+    public ContractPresenter presenter() {
+        return contractPresenter;
     }
 }

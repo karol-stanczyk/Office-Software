@@ -1,8 +1,8 @@
 package com.karol.presentation.forms.contractors.contractor;
 
 import com.karol.model.Contractor;
+import com.karol.presentation.navigation.Action;
 import com.karol.presentation.forms.Cleanable;
-import com.karol.presentation.forms.FormMode;
 import com.karol.presentation.forms.FormModeRunner;
 import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
@@ -42,8 +42,8 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     @Inject
     private LayoutService layoutService;
 
-    // FormMode variables
-    private Property<FormMode> formMode;
+    // Action variables
+    private Property<Action> action;
     private Contractor editContractor;
 
     private ResourceBundle bundle;
@@ -63,7 +63,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
                 FormModeRunner.runWithException(
                         () -> contractorRepository.persist(contractor),
                         () -> contractorRepository.update(contractor),
-                        formMode.getValue());
+                        action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
                 cleanForm();
             } catch (DatabaseException e) {
@@ -82,7 +82,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
 
     private Contractor createContractor() {
         Contractor contractor;
-        if(formMode.getValue().equals(FormMode.EDIT)) {
+        if(action.getValue().equals(Action.EDIT)) {
             contractor = editContractor;
         } else {
             contractor = new Contractor();
@@ -116,8 +116,8 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
                 .forField(contractorNip).onlyNumbers().validate();
     }
 
-    public void setFormMode(FormMode formMode) {
-        this.formMode.setValue(formMode);
+    public void setAction(Action action) {
+        this.action.setValue(action);
         applyFormMode();
     }
 
@@ -134,19 +134,19 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
         FormModeRunner.run(
                 () -> formHeaderText.setText(bundle.getString("new.contractor")),
                 () -> formHeaderText.setText(bundle.getString("new.contractor.edit")),
-                formMode.getValue());
+                action.getValue());
     }
 
     private void initializeGoBackButton() {
-        this.formMode = new SimpleObjectProperty<>();
-        this.formMode.addListener((observableValue, oldValue, newValue) -> {
+        this.action = new SimpleObjectProperty<>();
+        this.action.addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
                 FormModeRunner.run(
                         () -> goBackButton.setVisible(false),
                         () -> goBackButton.setVisible(true),
-                        formMode.getValue());
+                        action.getValue());
             }
         });
-        this.formMode.setValue(FormMode.NEW);
+        this.action.setValue(Action.NEW);
     }
 }

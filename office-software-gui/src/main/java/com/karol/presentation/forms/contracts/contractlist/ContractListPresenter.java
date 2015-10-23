@@ -1,10 +1,10 @@
-package com.karol.presentation.forms.contract.contractlist;
+package com.karol.presentation.forms.contracts.contractlist;
 
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.services.NavigationService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -42,7 +42,7 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void newContract() {
-        layoutService.showView(ViewsCache.contractView().getView(contractor));
+        layoutService.showView(ViewsCache.contractView().getView(contractor), this);
     }
 
     private void refreshTable() {

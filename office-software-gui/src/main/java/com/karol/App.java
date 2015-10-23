@@ -3,7 +3,7 @@ package com.karol;
 import com.airhacks.afterburner.injection.Injector;
 import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.services.NavigationService;
 import com.karol.utils.Bundles;
 import impl.org.controlsfx.i18n.Localization;
@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import javax.management.OperationsException;
 import java.io.File;
 import java.util.Locale;
 

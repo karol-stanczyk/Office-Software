@@ -1,7 +1,7 @@
 package com.karol.presentation.layout.topmenu;
 
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.cache.ViewsCache;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 

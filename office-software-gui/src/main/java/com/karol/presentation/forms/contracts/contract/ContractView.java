@@ -1,4 +1,4 @@
-package com.karol.presentation.forms.contract.contract;
+package com.karol.presentation.forms.contracts.contract;
 
 import com.airhacks.afterburner.views.FXMLView;
 

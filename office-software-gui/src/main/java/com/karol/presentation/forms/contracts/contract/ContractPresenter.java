@@ -1,8 +1,11 @@
-package com.karol.presentation.forms.contract.contract;
+package com.karol.presentation.forms.contracts.contract;
 
 import com.karol.model.Contractor;
 import com.karol.model.Period;
 import com.karol.presentation.forms.*;
+import com.karol.presentation.layout.control.LayoutService;
+import com.karol.presentation.navigation.Action;
+import com.karol.presentation.services.NavigationService;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.validation.FieldsValidator;
 import javafx.beans.property.Property;
@@ -15,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javax.inject.Inject;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -22,21 +26,19 @@ import java.util.ResourceBundle;
 
 public class ContractPresenter implements Initializable, Cleanable, Validator {
 
-    @FXML
-    private Label formHeaderText;
-    @FXML
-    private TextField contractNumber;
-    @FXML
-    private ComboBox<AbstractComboBoxEnum<Period>> contractPeriod;
-    @FXML
-    private DatePicker validityPeriod;
-    @FXML
-    private DatePicker paymentDate;
+    @FXML private Label formHeaderText;
+    @FXML private TextField contractNumber;
+    @FXML private ComboBox<AbstractComboBoxEnum<Period>> contractPeriod;
+    @FXML private DatePicker validityPeriod;
+    @FXML private DatePicker paymentDate;
+
+    @Inject
+    private LayoutService layoutService;
 
     private ResourceBundle bundle;
     private Contractor contractor;
-    // FormMode variables
-    private Property<FormMode> formMode;
+    // Action variables
+    private Property<Action> formMode;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,13 +49,10 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
         initPeriodList();
     }
 
-    private void initPeriodList() {
-        List<AbstractComboBoxEnum<Period>> list = Arrays.asList(
-                new AbstractComboBoxEnum<>(Period.MONTHLY),
-                new AbstractComboBoxEnum<>(Period.QUARTERLY),
-                new AbstractComboBoxEnum<>(Period.ANNUAL));
-        contractPeriod.setItems(FXCollections.observableList(list));
-
+    @FXML
+    public void goBack() {
+        NavigationService.getPreviousStatePresenter().ifPresent(Cleanable::cleanForm);
+        layoutService.showView(NavigationService.getPreviousState());
     }
 
     @Override
@@ -69,13 +68,21 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
         return null;
     }
 
-    public void setFormMode(FormMode formMode) {
-        this.formMode.setValue(formMode);
+    public void setFormMode(Action action) {
+        this.formMode.setValue(action);
         applyFormMode();
     }
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
+    }
+
+    private void initPeriodList() {
+        List<AbstractComboBoxEnum<Period>> list = Arrays.asList(
+                new AbstractComboBoxEnum<>(Period.MONTHLY),
+                new AbstractComboBoxEnum<>(Period.QUARTERLY),
+                new AbstractComboBoxEnum<>(Period.ANNUAL));
+        contractPeriod.setItems(FXCollections.observableList(list));
     }
 
     private void applyFormMode() {

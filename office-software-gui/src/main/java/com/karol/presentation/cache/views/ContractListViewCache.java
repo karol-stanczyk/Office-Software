@@ -1,8 +1,8 @@
-package com.karol.presentation.layout.control.cache.views;
+package com.karol.presentation.cache.views;
 
 import com.karol.model.Contractor;
-import com.karol.presentation.forms.contract.contractlist.ContractListPresenter;
-import com.karol.presentation.forms.contract.contractlist.ContractListView;
+import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter;
+import com.karol.presentation.forms.contracts.contractlist.ContractListView;
 import javafx.scene.Parent;
 
 public class ContractListViewCache {
@@ -23,5 +23,9 @@ public class ContractListViewCache {
         ContractListView contractListFxmlView = new ContractListView();
         contractListPresenter = (ContractListPresenter) contractListFxmlView.getPresenter();
         contractListView = contractListFxmlView.getView();
+    }
+
+    public ContractListPresenter presenter() {
+        return contractListPresenter;
     }
 }

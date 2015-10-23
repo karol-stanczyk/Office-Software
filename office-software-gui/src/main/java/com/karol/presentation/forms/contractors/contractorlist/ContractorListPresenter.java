@@ -3,7 +3,7 @@ package com.karol.presentation.forms.contractors.contractorlist;
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.utils.ActionUtils;
@@ -26,10 +26,8 @@ import java.util.stream.IntStream;
 
 public class ContractorListPresenter implements Initializable, Cleanable {
 
-    @FXML
-    private TextField contractorListFilter;
-    @FXML
-    private TableView<ContractorTableRow> contractorsTable;
+    @FXML private TextField contractorListFilter;
+    @FXML private TableView<ContractorTableRow> contractorsTable;
 
     @Inject
     private ContractorRepository contractorRepository;
@@ -127,8 +125,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
                                         .filter(row -> {
                                             String r = row.toString().toUpperCase();
                                             String f = newValue.toUpperCase();
-                                            boolean result = r.contains(f);
-                                            return result;
+                                            return r.contains(f);
                                         })
                                         .collect(Collectors.toList()))
                 );

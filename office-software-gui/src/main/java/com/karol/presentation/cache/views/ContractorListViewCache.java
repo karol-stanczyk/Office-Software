@@ -1,4 +1,4 @@
-package com.karol.presentation.layout.control.cache.views;
+package com.karol.presentation.cache.views;
 
 import com.karol.presentation.forms.contractors.contractorlist.ContractorListPresenter;
 import com.karol.presentation.forms.contractors.contractorlist.ContractorListView;
@@ -24,5 +24,9 @@ public class ContractorListViewCache {
         ContractorListView contractorListFxmlView = new ContractorListView();
         contractorListPresenter = (ContractorListPresenter) contractorListFxmlView.getPresenter();
         contractorListView = contractorListFxmlView.getView();
+    }
+
+    public ContractorListPresenter presenter() {
+        return contractorListPresenter;
     }
 }

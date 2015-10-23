@@ -1,9 +1,9 @@
-package com.karol.presentation.layout.control;
+package com.karol.presentation.cache;
 
-import com.karol.presentation.layout.control.cache.views.ContractListViewCache;
-import com.karol.presentation.layout.control.cache.views.ContractViewCache;
-import com.karol.presentation.layout.control.cache.views.ContractorListViewCache;
-import com.karol.presentation.layout.control.cache.views.ContractorViewCache;
+import com.karol.presentation.cache.views.ContractListViewCache;
+import com.karol.presentation.cache.views.ContractViewCache;
+import com.karol.presentation.cache.views.ContractorListViewCache;
+import com.karol.presentation.cache.views.ContractorViewCache;
 
 public class ViewsCache {
 
@@ -35,5 +35,4 @@ public class ViewsCache {
     public static ContractListViewCache contractListView() {
         return contractListView;
     }
-
 }

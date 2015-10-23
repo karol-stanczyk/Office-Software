@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <StackPane id="new-contractor"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.karol.presentation.forms.contract.contractlist.ContractListPresenter">
+           fx:controller="com.karol.presentation.forms.contracts.contractlist.ContractListPresenter">
 
     <GridPane vgap="10.0" alignment="TOP_CENTER">
         <padding>
