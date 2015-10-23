@@ -1,4 +1,4 @@
-package com.karol.presentation.forms.contractor.contractorlist;
+package com.karol.presentation.forms.contractors.contractorlist;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
@@ -88,7 +88,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     public void editContractor() {
         actionWithContractorSelected(() -> {
             Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
-            layoutService.showView(ViewsCache.getNewContractorView(contractor), this);
+            layoutService.showView(ViewsCache.contractorView().getView(contractor), this);
         });
     }
 
@@ -96,7 +96,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     public void showContracts() {
         actionWithContractorSelected(() -> {
             Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
-            layoutService.showView(ViewsCache.getContractListView(contractor));
+            layoutService.showView(ViewsCache.contractListView().getView(contractor));
         });
     }
 

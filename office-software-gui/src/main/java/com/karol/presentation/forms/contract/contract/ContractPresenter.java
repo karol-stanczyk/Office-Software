@@ -1,4 +1,4 @@
-package com.karol.presentation.forms.contract.newcontract;
+package com.karol.presentation.forms.contract.contract;
 
 import com.karol.model.Contractor;
 import com.karol.model.Period;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class NewContractPresenter implements Initializable, Cleanable, Validator {
+public class ContractPresenter implements Initializable, Cleanable, Validator {
 
     @FXML
     private Label formHeaderText;

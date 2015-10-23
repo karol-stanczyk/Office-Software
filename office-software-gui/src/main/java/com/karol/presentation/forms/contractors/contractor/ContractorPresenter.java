@@ -1,4 +1,4 @@
-package com.karol.presentation.forms.contractor.newcontractor;
+package com.karol.presentation.forms.contractors.contractor;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class NewContractorPresenter implements Initializable, Cleanable, Validator {
+public class ContractorPresenter implements Initializable, Cleanable, Validator {
 
     @FXML private TextField contractorName;
     @FXML private TextField contractorLastName;

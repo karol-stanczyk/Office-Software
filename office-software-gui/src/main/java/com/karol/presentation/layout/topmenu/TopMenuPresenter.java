@@ -20,12 +20,12 @@ public class TopMenuPresenter implements Initializable {
 
     @FXML
     public void newContractor() {
-        layoutService.showView(ViewsCache.getNewContractorView());
+        layoutService.showView(ViewsCache.contractorView().getView());
     }
 
     @FXML
     public void contractorList() {
-        layoutService.showView(ViewsCache.getContractorListView(true));
+        layoutService.showView(ViewsCache.contractorListView().getView(true));
     }
 
     @FXML

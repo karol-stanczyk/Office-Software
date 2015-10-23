@@ -25,6 +25,10 @@
     -fx-font: 14px "Times New Roman";
 }
 
+.working-content-width {
+    -fx-pref-width: 940px;
+}
+
 TextField {
     -fx-pref-width: 300px;
     -fx-background-color: transparent, grey, transparent, white;
@@ -89,6 +93,7 @@ TableView .table-column {
     -fx-padding: 0 50 0 0;
 }
 
-.underlined-label {
-    -fx-underline: true;
+.bold-label {
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
 }

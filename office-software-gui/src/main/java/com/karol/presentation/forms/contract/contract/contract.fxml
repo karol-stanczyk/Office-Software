@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 <StackPane id="new-contractor"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.karol.presentation.forms.contract.newcontract.NewContractPresenter">
+           fx:controller="com.karol.presentation.forms.contract.contract.ContractPresenter">
 
     <GridPane vgap="10.0" alignment="TOP_CENTER">
         <padding>

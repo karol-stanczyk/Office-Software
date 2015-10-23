@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Button?>
 <StackPane id="new-contractor"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.karol.presentation.forms.contractor.contractorlist.ContractorListPresenter">
+           fx:controller="com.karol.presentation.forms.contractors.contractorlist.ContractorListPresenter">
 
     <GridPane vgap="10.0" alignment="TOP_CENTER">
         <padding>
@@ -24,7 +24,7 @@
             <GridPane alignment="BASELINE_RIGHT" hgap="5.0" styleClass="contractor-list-filter-margin">
                 <Label styleClass="field-label" text="%contractor.list.filter" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
                 <TextField fx:id="contractorListFilter" id="%contractor.list.filter" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <Button text="%contractor.list.button.refresh" GridPane.rowIndex="1" GridPane.columnIndex="0" onAction="#refreshTable" styleClass="action-button"/>
+                <Button text="%button.refresh" GridPane.rowIndex="1" GridPane.columnIndex="0" onAction="#refreshTable" styleClass="action-button"/>
             </GridPane>
         </HBox>
         <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
@@ -65,9 +65,9 @@
         </HBox>
         <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
             <GridPane alignment="BASELINE_RIGHT" hgap="5.0" vgap="2.0" styleClass="contractor-list-filter-margin">
-                <Button text="%contractor.list.button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#showContracts" styleClass="action-button"/>
-                <Button text="%contractor.list.button.edit" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#editContractor" styleClass="action-button"/>
-                <Button text="%contractor.list.button.delete" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#deleteContractor" styleClass="action-button"/>
+                <Button text="%button.contracts" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#showContracts" styleClass="action-button"/>
+                <Button text="%button.edit" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#editContractor" styleClass="action-button"/>
+                <Button text="%button.delete" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#deleteContractor" styleClass="action-button"/>
             </GridPane>
         </HBox>
     </GridPane>

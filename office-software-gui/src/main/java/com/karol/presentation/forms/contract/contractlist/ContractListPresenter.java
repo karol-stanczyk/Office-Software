@@ -5,6 +5,7 @@ import com.karol.model.Contractor;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.layout.control.ViewsCache;
+import com.karol.presentation.services.NavigationService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ public class ContractListPresenter implements Initializable, Cleanable {
     @FXML private TableView<ContractListTableRow> contractListTable;
     @FXML private Label contractorName;
     @FXML private Label contractorLastName;
+    @FXML private Label contractorAddress;
 
     private Contractor contractor;
 
@@ -40,7 +42,7 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void newContract() {
-        layoutService.showView(ViewsCache.getNewContractView(contractor));
+        layoutService.showView(ViewsCache.contractView().getView(contractor));
     }
 
     private void refreshTable() {
@@ -58,5 +60,11 @@ public class ContractListPresenter implements Initializable, Cleanable {
         this.contractor = contractor;
         this.contractorName.setText(contractor.getName());
         this.contractorLastName.setText(contractor.getLastName());
+        this.contractorAddress.setText(contractor.getAddress());
+    }
+
+    @FXML
+    public void goBack() {
+        layoutService.showView(NavigationService.getPreviousState());
     }
 }

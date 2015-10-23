@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 <StackPane id="new-contractor"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.karol.presentation.forms.contractor.newcontractor.NewContractorPresenter">
+           fx:controller="com.karol.presentation.forms.contractors.contractor.ContractorPresenter">
 
     <GridPane vgap="10.0" alignment="TOP_CENTER">
         <padding>

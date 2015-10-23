@@ -1,4 +1,4 @@
-package com.karol.presentation.forms.contractor.contractorlist;
+package com.karol.presentation.forms.contractors.contractorlist;
 
 import com.karol.model.Contractor;
 import com.karol.presentation.forms.AbstractTableRow;
