@@ -7,11 +7,11 @@
            fx:controller="com.karol.presentation.layout.topmenu.TopMenuPresenter">
     <MenuBar>
         <Menu text="%file">
-            <MenuItem text="%exit" onAction="#exit"/>
+            <MenuItem text="%exit" onAction="#exit" styleClass="action-button"/>
         </Menu>
         <Menu text="%contractors">
-            <MenuItem text="%contractors.new" onAction="#newContractor"/>
-            <MenuItem text="%contractors.list" onAction="#contractorList"/>
+            <MenuItem text="%contractors.new" onAction="#newContractor" styleClass="long-action-button"/>
+            <MenuItem text="%contractors.list" onAction="#contractorList" styleClass="long-action-button"/>
         </Menu>
     </MenuBar>
 </StackPane>

@@ -35,7 +35,7 @@ public class Contractor implements Serializable {
     private String pesel;
     private String nip;
 
-    @OneToMany(mappedBy = "contractor")
+    @OneToMany(mappedBy = "contractor", cascade = CascadeType.ALL)
     private List<Contract> contractList;
 
     public Contractor() {

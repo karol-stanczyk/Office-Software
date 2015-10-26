@@ -3,7 +3,9 @@ package com.karol.utils;
 import javafx.util.StringConverter;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -38,5 +40,10 @@ public class DateFormatter {
                 }
             }
         };
+    }
+
+    public static Date fromLocaDate(LocalDate localDate) {
+        Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        return Date.from(instant);
     }
 }

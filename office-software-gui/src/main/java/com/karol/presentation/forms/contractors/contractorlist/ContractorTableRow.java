@@ -13,13 +13,13 @@ public class ContractorTableRow extends AbstractTableRow {
     private String nip;
 
     public ContractorTableRow(Contractor contractor, int index) {
+        setIndex(index);
         this.contractor = contractor;
         this.name = contractor.getName();
         this.lastName = contractor.getLastName();
         this.address = contractor.getAddress();
         this.pesel = contractor.getPesel();
         this.nip = contractor.getNip();
-        this.index = index;
     }
 
     public Contractor getContractor() {

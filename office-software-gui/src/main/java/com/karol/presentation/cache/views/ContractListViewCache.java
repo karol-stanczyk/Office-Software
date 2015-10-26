@@ -26,6 +26,7 @@ public class ContractListViewCache implements ViewCache {
 
     public Parent getView(Contractor contractor) {
         contractListPresenter.setContractor(contractor);
+        contractListPresenter.refreshTable();
         return contractListView;
     }
 

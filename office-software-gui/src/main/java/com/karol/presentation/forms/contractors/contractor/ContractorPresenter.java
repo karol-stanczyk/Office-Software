@@ -11,15 +11,18 @@ import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
 import com.karol.utils.Bundles;
+import com.karol.utils.KeyBinding;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -34,6 +37,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     @FXML private TextField contractorNip;
     @FXML private Label formHeaderText;
     @FXML private Button goBackButton;
+    @FXML private Parent root;
 
     @Inject private NotificationsService notificationsService;
     @Inject private ContractorRepository contractorRepository;
@@ -50,6 +54,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeGoBackButton();
         this.bundle = resourceBundle;
+        KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);
     }
 
     @FXML
@@ -79,7 +84,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
 
     private Contractor createContractor() {
         Contractor contractor;
-        if(action.getValue().equals(Action.EDIT)) {
+        if (action.getValue().equals(Action.EDIT)) {
             contractor = editContractor;
         } else {
             contractor = new Contractor();

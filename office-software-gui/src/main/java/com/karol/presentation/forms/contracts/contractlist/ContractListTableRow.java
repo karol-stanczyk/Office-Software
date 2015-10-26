@@ -15,12 +15,12 @@ public class ContractListTableRow extends AbstractTableRow {
     private String paymentDate;
 
     public ContractListTableRow(Contract contract, int index) {
+        setIndex(index);
         this.contract = contract;
-        this.index = index;
         this.period = Bundles.get(contract.getPeriod().name().toLowerCase());
         this.number = contract.getNumber();
         this.validityPeriod = DateFormatter.toString(contract.getValidityPeriod());
-        this.paymentDate = DateFormatter.toString(contract.getValidityPeriod());
+        this.paymentDate = DateFormatter.toString(contract.getPaymentDate());
     }
 
     public String getPeriod() {
@@ -37,6 +37,10 @@ public class ContractListTableRow extends AbstractTableRow {
 
     public String getPaymentDate() {
         return paymentDate;
+    }
+
+    public Contract getContract() {
+        return contract;
     }
 
     @Override

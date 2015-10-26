@@ -6,6 +6,11 @@ import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
+import com.karol.presentation.services.NotificationsService;
+import com.karol.repository.ContractRepository;
+import com.karol.utils.ActionUtils;
+import com.karol.utils.Bundles;
+import com.karol.utils.VoidFunction;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +35,10 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @Inject private LayoutService layoutService;
     @Inject private GoBackNavigator goBackNavigator;
+    @Inject private NotificationsService notificationsService;
+    @Inject private ContractRepository contractRepository;
+    private ResourceBundle bundle;
+
 
     @Override
     public void cleanForm() {
@@ -38,6 +47,7 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.bundle = resourceBundle;
     }
 
     @FXML
@@ -66,5 +76,29 @@ public class ContractListPresenter implements Initializable, Cleanable {
     @FXML
     public void goBack() {
         layoutService.showView(goBackNavigator.getGoBackView(this));
+    }
+
+    @FXML
+    public void deleteContract() {
+        ActionUtils.showConfirmation(bundle.getString("confirmation.contract.delete"), () ->
+                        actionWithContractSelected(() -> {
+                            contractListTable.getSelectionModel().getSelectedItems().stream()
+                                    .forEach(row -> contractRepository.delete(row.getContract(), contractor));
+                            refreshTable();
+                            notificationsService.showInformation(bundle.getString("contract.delete.success"));
+                        })
+        );
+    }
+
+    public void actionWithContractSelected(VoidFunction function) {
+        if (isRowSelected()) {
+            function.run();
+        } else {
+            notificationsService.showError(Bundles.get("no.rows.selected.exception"));
+        }
+    }
+
+    private boolean isRowSelected() {
+        return !contractListTable.getSelectionModel().getSelectedItems().isEmpty();
     }
 }

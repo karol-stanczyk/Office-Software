@@ -5,6 +5,7 @@
 <?import javafx.geometry.Insets?>
 <StackPane id="new-contractor"
            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="root"
            fx:controller="com.karol.presentation.forms.contracts.contract.ContractPresenter">
 
     <GridPane vgap="10.0" alignment="TOP_CENTER">
@@ -27,8 +28,8 @@
             <DatePicker fx:id="paymentDate" id="%contract.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
             <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
-                <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0" styleClass="action-button"/>
-                <!--<Button text="%new.contractor.save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>-->
+                <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0" styleClass="action-button" focusTraversable="false"/>
+                <Button text="%button.save" onAction="#saveContract" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" styleClass="action-button"/>
             </GridPane>
         </GridPane>
     </GridPane>

@@ -69,7 +69,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void deleteContractor() {
-        ActionUtils.showConfirmation(Bundles.get("confirmation.contractors.delete"), () ->
+        ActionUtils.showConfirmation(bundle.getString("confirmation.contractors.delete"), () ->
                         actionWithContractorSelected(() -> {
                             contractorsTable.getSelectionModel().getSelectedItems().stream()
                                     .forEach(row -> contractorRepository.delete(row.getContractor()));

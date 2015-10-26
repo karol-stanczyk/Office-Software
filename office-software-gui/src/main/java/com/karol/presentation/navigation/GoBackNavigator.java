@@ -55,15 +55,5 @@ public class GoBackNavigator {
             this.to = to;
             this.clean = clean;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o == null) return false;
-            if (o instanceof NavigationRule) {
-                NavigationRule nav = (NavigationRule) o;
-                return nav.from.equals(from);
-            }
-            return false;
-        }
     }
 }
