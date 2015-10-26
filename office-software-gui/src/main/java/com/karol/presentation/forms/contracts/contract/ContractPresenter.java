@@ -2,10 +2,13 @@ package com.karol.presentation.forms.contracts.contract;
 
 import com.karol.model.Contractor;
 import com.karol.model.Period;
-import com.karol.presentation.forms.*;
+import com.karol.presentation.forms.AbstractComboBoxEnum;
+import com.karol.presentation.forms.Cleanable;
+import com.karol.presentation.forms.FormModeRunner;
+import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.Action;
-import com.karol.presentation.services.NavigationService;
+import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.validation.FieldsValidator;
 import javafx.beans.property.Property;
@@ -32,8 +35,8 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
     @FXML private DatePicker validityPeriod;
     @FXML private DatePicker paymentDate;
 
-    @Inject
-    private LayoutService layoutService;
+    @Inject private LayoutService layoutService;
+    @Inject private GoBackNavigator goBackNavigator;
 
     private ResourceBundle bundle;
     private Contractor contractor;
@@ -51,8 +54,7 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
 
     @FXML
     public void goBack() {
-        NavigationService.getPreviousStatePresenter().ifPresent(Cleanable::cleanForm);
-        layoutService.showView(NavigationService.getPreviousState());
+        layoutService.showView(goBackNavigator.getGoBackView(this));
     }
 
     @Override

@@ -29,12 +29,9 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     @FXML private TextField contractorListFilter;
     @FXML private TableView<ContractorTableRow> contractorsTable;
 
-    @Inject
-    private ContractorRepository contractorRepository;
-    @Inject
-    private NotificationsService notificationsService;
-    @Inject
-    private LayoutService layoutService;
+    @Inject private ContractorRepository contractorRepository;
+    @Inject private NotificationsService notificationsService;
+    @Inject private LayoutService layoutService;
 
     private List<Contractor> contractorList;
     private ResourceBundle bundle;
@@ -86,7 +83,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     public void editContractor() {
         actionWithContractorSelected(() -> {
             Contractor contractor = contractorsTable.getSelectionModel().getSelectedItem().getContractor();
-            layoutService.showView(ViewsCache.contractorView().getView(contractor), this);
+            layoutService.showView(ViewsCache.contractorView().getView(contractor));
         });
     }
 

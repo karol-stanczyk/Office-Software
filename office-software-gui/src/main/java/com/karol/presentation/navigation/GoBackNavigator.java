@@ -1,6 +1,7 @@
 package com.karol.presentation.navigation;
 
 import com.karol.presentation.cache.ViewsCache;
+import com.karol.presentation.cache.views.ViewCache;
 import com.karol.presentation.forms.contractors.contractor.ContractorPresenter;
 import com.karol.presentation.forms.contractors.contractorlist.ContractorListPresenter;
 import com.karol.presentation.forms.contracts.contract.ContractPresenter;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GoBackNavigator {
 
@@ -29,9 +31,16 @@ public class GoBackNavigator {
         navigationRules.add(new NavigationRule(ContractPresenter.class, ContractListPresenter.class, true));
     }
 
+    @SuppressWarnings("ConstantConditions")
     public Parent getGoBackView(Initializable presenter) {
-        if (ViewsCache.contractListView().presenter().getClass().equals(presenter.getClass())) {
-
+        Optional<NavigationRule> navigationRule = navigationRules.stream()
+                .filter(nav -> nav.from.equals(presenter.getClass()))
+                .findAny();
+        if (navigationRule.isPresent()) {
+            NavigationRule rule = navigationRule.get();
+            ViewCache viewCache = ViewsCache.getView(rule.to);
+            if (rule.clean) viewCache.refresh();
+            return viewCache.getView();
         }
         return null;
     }
@@ -41,16 +50,20 @@ public class GoBackNavigator {
         private Class to;
         private boolean clean;
 
-        public NavigationRule(Class from, Class to) {
-            this.from = from;
-            this.to = to;
-            this.clean = false;
-        }
-
         public NavigationRule(Class from, Class to, boolean clean) {
             this.from = from;
             this.to = to;
             this.clean = clean;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null) return false;
+            if (o instanceof NavigationRule) {
+                NavigationRule nav = (NavigationRule) o;
+                return nav.from.equals(from);
+            }
+            return false;
         }
     }
 }

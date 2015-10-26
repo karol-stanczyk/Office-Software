@@ -1,10 +1,9 @@
 package com.karol;
 
 import com.airhacks.afterburner.injection.Injector;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.cache.ViewsCache;
-import com.karol.presentation.services.NavigationService;
 import com.karol.utils.Bundles;
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
@@ -43,7 +42,6 @@ public class App extends Application {
 
     public Scene createMainScene() {
         Parent startView  = new LayoutView().getView();
-        NavigationService.setCurrentState(startView);
         Scene scene = new Scene(startView);
         final String uri = getClass().getResource("app.css").toExternalForm();
         scene.getStylesheets().add(uri);

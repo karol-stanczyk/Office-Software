@@ -5,13 +5,23 @@ import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter
 import com.karol.presentation.forms.contracts.contractlist.ContractListView;
 import javafx.scene.Parent;
 
-public class ContractListViewCache {
+public class ContractListViewCache implements ViewCache {
 
     private ContractListPresenter contractListPresenter;
     private Parent contractListView;
 
     public ContractListViewCache() {
         initContractListView();
+    }
+
+    @Override
+    public Parent getView() {
+        return contractListView;
+    }
+
+    @Override
+    public void refresh() {
+        contractListPresenter.refreshTable();
     }
 
     public Parent getView(Contractor contractor) {

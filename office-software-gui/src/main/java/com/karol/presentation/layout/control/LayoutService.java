@@ -1,8 +1,6 @@
 package com.karol.presentation.layout.control;
 
-import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.LayoutPresenter;
-import com.karol.presentation.services.NavigationService;
 import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
 import javafx.scene.Parent;
@@ -18,12 +16,6 @@ public class LayoutService {
     }
 
     public void showView(Parent parent) {
-        NavigationService.setCurrentState(parent);
-        layoutPresenter.setContent(parent);
-    }
-
-    public void showView(Parent parent, Cleanable cleanable) {
-        NavigationService.setCurrentState(parent, cleanable);
         layoutPresenter.setContent(parent);
     }
 

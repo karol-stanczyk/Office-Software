@@ -27,7 +27,7 @@
             <DatePicker fx:id="paymentDate" id="%contract.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
             <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
-                <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0"/>
+                <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0" styleClass="action-button"/>
                 <!--<Button text="%new.contractor.save" onAction="#saveContractor" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS"/>-->
             </GridPane>
         </GridPane>

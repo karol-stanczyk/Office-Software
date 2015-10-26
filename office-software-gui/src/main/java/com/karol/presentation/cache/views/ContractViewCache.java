@@ -6,13 +6,22 @@ import com.karol.presentation.forms.contracts.contract.ContractView;
 import com.karol.presentation.navigation.Action;
 import javafx.scene.Parent;
 
-public class ContractViewCache {
+public class ContractViewCache implements ViewCache {
 
     private ContractPresenter contractPresenter;
     private Parent newContractView;
 
     public ContractViewCache() {
         initNewContractView();
+    }
+
+    @Override
+    public Parent getView() {
+        return newContractView;
+    }
+
+    @Override
+    public void refresh() {
     }
 
     public Parent getView(Contractor contractor) {

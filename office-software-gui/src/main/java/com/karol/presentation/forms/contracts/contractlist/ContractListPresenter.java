@@ -2,10 +2,10 @@ package com.karol.presentation.forms.contracts.contractlist;
 
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.cache.ViewsCache;
-import com.karol.presentation.services.NavigationService;
+import com.karol.presentation.navigation.GoBackNavigator;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,8 +28,8 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     private Contractor contractor;
 
-    @Inject
-    private LayoutService layoutService;
+    @Inject private LayoutService layoutService;
+    @Inject private GoBackNavigator goBackNavigator;
 
     @Override
     public void cleanForm() {
@@ -42,10 +42,10 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void newContract() {
-        layoutService.showView(ViewsCache.contractView().getView(contractor), this);
+        layoutService.showView(ViewsCache.contractView().getView(contractor));
     }
 
-    private void refreshTable() {
+    public void refreshTable() {
         contractListTable.setItems(FXCollections.observableList(getContractListTableRows()));
     }
 
@@ -65,6 +65,6 @@ public class ContractListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void goBack() {
-        layoutService.showView(NavigationService.getPreviousState());
+        layoutService.showView(goBackNavigator.getGoBackView(this));
     }
 }

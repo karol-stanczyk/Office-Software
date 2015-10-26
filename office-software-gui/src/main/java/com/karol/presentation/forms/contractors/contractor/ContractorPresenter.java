@@ -1,12 +1,12 @@
 package com.karol.presentation.forms.contractors.contractor;
 
 import com.karol.model.Contractor;
-import com.karol.presentation.navigation.Action;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.FormModeRunner;
 import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.services.NavigationService;
+import com.karol.presentation.navigation.Action;
+import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.DatabaseException;
@@ -35,12 +35,10 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     @FXML private Label formHeaderText;
     @FXML private Button goBackButton;
 
-    @Inject
-    private NotificationsService notificationsService;
-    @Inject
-    private ContractorRepository contractorRepository;
-    @Inject
-    private LayoutService layoutService;
+    @Inject private NotificationsService notificationsService;
+    @Inject private ContractorRepository contractorRepository;
+    @Inject private LayoutService layoutService;
+    @Inject private GoBackNavigator goBackNavigator;
 
     // Action variables
     private Property<Action> action;
@@ -76,8 +74,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
 
     @FXML
     public void goBack() {
-        NavigationService.getPreviousStatePresenter().ifPresent(Cleanable::cleanForm);
-        layoutService.showView(NavigationService.getPreviousState());
+        layoutService.showView(goBackNavigator.getGoBackView(this));
     }
 
     private Contractor createContractor() {

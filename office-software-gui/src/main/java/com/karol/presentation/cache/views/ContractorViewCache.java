@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 
 import java.util.Optional;
 
-public class ContractorViewCache {
+public class ContractorViewCache implements ViewCache {
 
     private ContractorPresenter contractorPresenter;
     private Parent contractorView;
@@ -23,8 +23,13 @@ public class ContractorViewCache {
         contractorView = contractorFxmlView.getView();
     }
 
+    @Override
     public Parent getView() {
         return getView(Action.NEW, Optional.empty());
+    }
+
+    @Override
+    public void refresh() {
     }
 
     public Parent getView(Contractor contractor) {
