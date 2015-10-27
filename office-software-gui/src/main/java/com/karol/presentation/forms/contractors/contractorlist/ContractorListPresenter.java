@@ -1,15 +1,14 @@
 package com.karol.presentation.forms.contractors.contractorlist;
 
 import com.karol.model.Contractor;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.presentation.cache.ViewsCache;
-import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.access.RepositoryProducer;
-import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
-import com.karol.utils.VoidFunction;
+import com.karol.utils.functions.VoidFunction;
+import com.karol.utils.notifications.NotificationsService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,26 +42,16 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
         initializeFilter();
-        contractorRepository = repositoryProducer.getContractorRepository();
+        initializeRepositories();
         contractorsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         initializeOnRowDoubleClickListener();
         refreshTable();
     }
 
-    private void initializeOnRowDoubleClickListener() {
-        contractorsTable.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-                if (mouseEvent.getClickCount() == 2) {
-                    showContracts();
-                }
-            }
-        });
-    }
-
-    private List<ContractorTableRow> contractorTableRows() {
-        return  IntStream.range(0, contractorList.size())
-                .mapToObj(index -> new ContractorTableRow(contractorList.get(index), index))
-                .collect(Collectors.toList());
+    @Override
+    public void cleanForm() {
+        refreshTable();
+        contractorListFilter.setText("");
     }
 
     @FXML
@@ -73,7 +62,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
 
     @FXML
     public void deleteContractor() {
-        ActionUtils.showConfirmation(bundle.getString("confirmation.contractors.delete"), () ->
+        NotificationsService.showConfirmation(bundle.getString("confirmation.contractors.delete"), () ->
                         actionWithContractorSelected(() -> {
                             contractorsTable.getSelectionModel().getSelectedItems().stream()
                                     .forEach(row -> contractorRepository.delete(row.getContractor()));
@@ -99,7 +88,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
         });
     }
 
-    public void actionWithContractorSelected(VoidFunction function) {
+    private void actionWithContractorSelected(VoidFunction function) {
         if (isRowSelected()) {
             function.run();
         } else {
@@ -107,10 +96,21 @@ public class ContractorListPresenter implements Initializable, Cleanable {
         }
     }
 
-    @Override
-    public void cleanForm() {
-        refreshTable();
-        contractorListFilter.setText("");
+
+    private void initializeOnRowDoubleClickListener() {
+        contractorsTable.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                if (mouseEvent.getClickCount() == 2) {
+                    showContracts();
+                }
+            }
+        });
+    }
+
+    private List<ContractorTableRow> contractorTableRows() {
+        return IntStream.range(0, contractorList.size())
+                .mapToObj(index -> new ContractorTableRow(contractorList.get(index), index))
+                .collect(Collectors.toList());
     }
 
     private boolean isRowSelected() {
@@ -132,5 +132,9 @@ public class ContractorListPresenter implements Initializable, Cleanable {
                 );
             }
         });
+    }
+
+    private void initializeRepositories() {
+        contractorRepository = repositoryProducer.getContractorRepository();
     }
 }

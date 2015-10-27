@@ -8,6 +8,7 @@ import net.sf.cglib.proxy.InvocationHandler;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.lang.reflect.Executable;
 
 @Singleton
 public class RepositoryProducer {
@@ -31,7 +32,7 @@ public class RepositoryProducer {
     private <T> T proxy(final T object) {
         return (T) Enhancer.create(object.getClass(),
                 (InvocationHandler) (proxy, method, args) -> {
-                    if (method.getAnnotation(Transactional.class) != null) {
+                    if (hasAnnotation(method, Transactional.class)) {
                         try {
                             entityManager.getTransaction().begin();
                             Object result = method.invoke(object, args);
@@ -45,5 +46,9 @@ public class RepositoryProducer {
                         return method.invoke(object, args);
                     }
                 });
+    }
+
+    private boolean hasAnnotation(Executable executable, Class c) {
+        return executable.getAnnotation(c) != null;
     }
 }

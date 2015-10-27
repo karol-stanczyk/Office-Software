@@ -2,8 +2,8 @@ package com.karol.presentation.forms;
 
 import com.karol.presentation.navigation.Action;
 import com.karol.repository.utils.DatabaseException;
-import com.karol.utils.VoidDatabaseFunction;
-import com.karol.utils.VoidFunction;
+import com.karol.utils.functions.VoidDatabaseFunction;
+import com.karol.utils.functions.VoidFunction;
 
 public class FormModeRunner {
 

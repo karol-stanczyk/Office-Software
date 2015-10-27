@@ -7,12 +7,12 @@ import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
-import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
-import com.karol.repository.utils.DatabaseException;
 import com.karol.repository.access.RepositoryProducer;
+import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.KeyBinding;
+import com.karol.utils.notifications.NotificationsService;
 import com.karol.utils.validation.FieldsValidator;
 import com.karol.utils.validation.TextFieldsValidator;
 import javafx.beans.property.Property;
@@ -55,10 +55,31 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        contractorRepository = repositoryProducer.getContractorRepository();
+        initializeRepositories();
         initializeGoBackButton();
         this.bundle = resourceBundle;
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);
+    }
+
+    @Override
+    public void cleanForm() {
+        editContractor = null;
+        contractorName.setText("");
+        contractorLastName.setText("");
+        contractorAddress.setText("");
+        contractorPesel.setText("");
+        contractorNip.setText("");
+        FieldsValidator.removeErrorStyleClasses(contractorName, contractorLastName, contractorAddress, contractorPesel, contractorNip);
+    }
+
+    @Override
+    public FieldsValidator validate() {
+        return new TextFieldsValidator()
+                .forField(contractorName).notEmpty().onlyLetters().validate()
+                .forField(contractorLastName).notEmpty().onlyLetters().validate()
+                .forField(contractorAddress).notEmpty().validate()
+                .forField(contractorPesel).onlyNumbers().validate()
+                .forField(contractorNip).onlyNumbers().validate();
     }
 
     @FXML
@@ -86,6 +107,20 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
         layoutService.showView(goBackNavigator.getGoBackView(this));
     }
 
+    public void setAction(Action action) {
+        this.action.setValue(action);
+        applyFormMode();
+    }
+
+    public void setEditContractor(Contractor contractor) {
+        this.editContractor = contractor;
+        contractorName.setText(contractor.getName());
+        contractorLastName.setText(contractor.getLastName());
+        contractorAddress.setText(contractor.getAddress());
+        contractorPesel.setText(contractor.getPesel());
+        contractorNip.setText(contractor.getNip());
+    }
+
     private Contractor createContractor() {
         Contractor contractor;
         if (action.getValue().equals(Action.EDIT)) {
@@ -99,41 +134,6 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
         contractor.setPesel(contractorPesel.getText());
         contractor.setNip(contractorNip.getText());
         return contractor;
-    }
-
-    @Override
-    public void cleanForm() {
-        editContractor = null;
-        contractorName.setText("");
-        contractorLastName.setText("");
-        contractorAddress.setText("");
-        contractorPesel.setText("");
-        contractorNip.setText("");
-        FieldsValidator.removeErrorStyleClasses(contractorName, contractorLastName, contractorAddress, contractorPesel, contractorNip);
-    }
-
-    @Override
-    public FieldsValidator validate() {
-        return new TextFieldsValidator()
-                .forField(contractorName).notEmpty().onlyLetters().validate()
-                .forField(contractorLastName).notEmpty().onlyLetters().validate()
-                .forField(contractorAddress).notEmpty().validate()
-                .forField(contractorPesel).onlyNumbers().validate()
-                .forField(contractorNip).onlyNumbers().validate();
-    }
-
-    public void setAction(Action action) {
-        this.action.setValue(action);
-        applyFormMode();
-    }
-
-    public void setEditContractor(Contractor contractor) {
-        this.editContractor = contractor;
-        contractorName.setText(contractor.getName());
-        contractorLastName.setText(contractor.getLastName());
-        contractorAddress.setText(contractor.getAddress());
-        contractorPesel.setText(contractor.getPesel());
-        contractorNip.setText(contractor.getNip());
     }
 
     private void applyFormMode() {
@@ -154,5 +154,9 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
             }
         });
         this.action.setValue(Action.NEW);
+    }
+
+    private void initializeRepositories() {
+        contractorRepository = repositoryProducer.getContractorRepository();
     }
 }

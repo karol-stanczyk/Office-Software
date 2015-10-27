@@ -1,5 +1,6 @@
 package com.karol.utils;
 
+import com.karol.utils.functions.VoidFunction;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 

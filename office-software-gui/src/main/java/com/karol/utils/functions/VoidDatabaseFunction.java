@@ -1,4 +1,4 @@
-package com.karol.utils;
+package com.karol.utils.functions;
 
 import com.karol.repository.utils.DatabaseException;
 

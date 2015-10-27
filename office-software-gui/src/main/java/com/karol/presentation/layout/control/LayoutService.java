@@ -1,8 +1,8 @@
 package com.karol.presentation.layout.control;
 
 import com.karol.presentation.layout.LayoutPresenter;
-import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
+import com.karol.utils.notifications.NotificationsService;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
@@ -12,7 +12,7 @@ public class LayoutService {
     private LayoutPresenter layoutPresenter;
 
     public void closeApplication() {
-        ActionUtils.showConfirmation(Bundles.get("application.close.contentText"), applicationStage::close);
+        NotificationsService.showConfirmation(Bundles.get("application.close.contentText"), applicationStage::close);
     }
 
     public void showView(Parent parent) {

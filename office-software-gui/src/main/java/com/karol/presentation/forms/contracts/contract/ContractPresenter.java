@@ -10,13 +10,13 @@ import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
-import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractRepository;
 import com.karol.repository.access.RepositoryProducer;
 import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.KeyBinding;
+import com.karol.utils.notifications.NotificationsService;
 import com.karol.utils.validation.FieldsValidator;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -59,12 +59,23 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
-        this.formMode = new SimpleObjectProperty<>();
-        this.validityPeriod.setConverter(DateFormatter.createConverter());
-        this.paymentDate.setConverter(DateFormatter.createConverter());
-        contractRepository = repositoryProducer.getContractRepository();
+        initializeValues();
+        initializeRepositories();
+        initializePeriodList();
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContract);
-        initPeriodList();
+    }
+
+    @Override
+    public void cleanForm() {
+        contractNumber.setText("");
+        contractPeriod.getSelectionModel().select(null);
+        validityPeriod.setValue(null);
+        paymentDate.setValue(null);
+    }
+
+    @Override
+    public FieldsValidator validate() {
+        return null;
     }
 
     @FXML
@@ -98,19 +109,6 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
         return contract;
     }
 
-    @Override
-    public void cleanForm() {
-        contractNumber.setText("");
-        contractPeriod.getSelectionModel().select(null);
-        validityPeriod.setValue(null);
-        paymentDate.setValue(null);
-    }
-
-    @Override
-    public FieldsValidator validate() {
-        return null;
-    }
-
     public void setFormMode(Action action) {
         this.formMode.setValue(action);
         applyFormMode();
@@ -120,7 +118,7 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
         this.contractor = contractor;
     }
 
-    private void initPeriodList() {
+    private void initializePeriodList() {
         List<AbstractComboBoxEnum<Period>> list = Arrays.asList(
                 new AbstractComboBoxEnum<>(Period.MONTHLY),
                 new AbstractComboBoxEnum<>(Period.QUARTERLY),
@@ -133,5 +131,15 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
                 () -> formHeaderText.setText(bundle.getString("new.contract")),
                 () -> formHeaderText.setText(bundle.getString("new.contract.edit")),
                 formMode.getValue());
+    }
+
+    private void initializeValues() {
+        this.formMode = new SimpleObjectProperty<>();
+        this.validityPeriod.setConverter(DateFormatter.createConverter());
+        this.paymentDate.setConverter(DateFormatter.createConverter());
+    }
+
+    private void initializeRepositories() {
+        contractRepository = repositoryProducer.getContractRepository();
     }
 }
