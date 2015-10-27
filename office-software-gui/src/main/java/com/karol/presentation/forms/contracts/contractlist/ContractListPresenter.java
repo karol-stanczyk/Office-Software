@@ -8,6 +8,7 @@ import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractRepository;
+import com.karol.repository.access.RepositoryProducer;
 import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
 import com.karol.utils.VoidFunction;
@@ -36,7 +37,10 @@ public class ContractListPresenter implements Initializable, Cleanable {
     @Inject private LayoutService layoutService;
     @Inject private GoBackNavigator goBackNavigator;
     @Inject private NotificationsService notificationsService;
-    @Inject private ContractRepository contractRepository;
+
+    @Inject private RepositoryProducer repositoryProducer;
+    private ContractRepository contractRepository;
+
     private ResourceBundle bundle;
 
 
@@ -48,6 +52,7 @@ public class ContractListPresenter implements Initializable, Cleanable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
+        contractRepository = repositoryProducer.getContractRepository();
     }
 
     @FXML

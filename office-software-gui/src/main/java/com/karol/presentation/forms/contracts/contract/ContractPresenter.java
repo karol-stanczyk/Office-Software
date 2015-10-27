@@ -12,7 +12,8 @@ import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractRepository;
-import com.karol.repository.DatabaseException;
+import com.karol.repository.access.RepositoryProducer;
+import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.KeyBinding;
@@ -47,7 +48,8 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
     @Inject private LayoutService layoutService;
     @Inject private GoBackNavigator goBackNavigator;
     @Inject private NotificationsService notificationsService;
-    @Inject private ContractRepository contractRepository;
+    @Inject private RepositoryProducer repositoryProducer;
+    private ContractRepository contractRepository;
 
     private ResourceBundle bundle;
     private Contractor contractor;
@@ -60,6 +62,7 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
         this.formMode = new SimpleObjectProperty<>();
         this.validityPeriod.setConverter(DateFormatter.createConverter());
         this.paymentDate.setConverter(DateFormatter.createConverter());
+        contractRepository = repositoryProducer.getContractRepository();
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContract);
         initPeriodList();
     }

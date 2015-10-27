@@ -25,7 +25,10 @@
             <groupId>com.airhacks</groupId>
             <artifactId>afterburner.fx</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

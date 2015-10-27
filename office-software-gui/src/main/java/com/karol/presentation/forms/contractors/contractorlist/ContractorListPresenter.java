@@ -6,6 +6,7 @@ import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
+import com.karol.repository.access.RepositoryProducer;
 import com.karol.utils.ActionUtils;
 import com.karol.utils.Bundles;
 import com.karol.utils.VoidFunction;
@@ -29,7 +30,9 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     @FXML private TextField contractorListFilter;
     @FXML private TableView<ContractorTableRow> contractorsTable;
 
-    @Inject private ContractorRepository contractorRepository;
+    @Inject private RepositoryProducer repositoryProducer;
+    private ContractorRepository contractorRepository;
+
     @Inject private NotificationsService notificationsService;
     @Inject private LayoutService layoutService;
 
@@ -40,6 +43,7 @@ public class ContractorListPresenter implements Initializable, Cleanable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
         initializeFilter();
+        contractorRepository = repositoryProducer.getContractorRepository();
         contractorsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         initializeOnRowDoubleClickListener();
         refreshTable();

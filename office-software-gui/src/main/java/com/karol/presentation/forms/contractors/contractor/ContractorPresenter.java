@@ -9,7 +9,8 @@ import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.presentation.services.NotificationsService;
 import com.karol.repository.ContractorRepository;
-import com.karol.repository.DatabaseException;
+import com.karol.repository.utils.DatabaseException;
+import com.karol.repository.access.RepositoryProducer;
 import com.karol.utils.Bundles;
 import com.karol.utils.KeyBinding;
 import com.karol.utils.validation.FieldsValidator;
@@ -39,8 +40,10 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     @FXML private Button goBackButton;
     @FXML private Parent root;
 
+    @Inject private RepositoryProducer repositoryProducer;
+    private ContractorRepository contractorRepository;
+
     @Inject private NotificationsService notificationsService;
-    @Inject private ContractorRepository contractorRepository;
     @Inject private LayoutService layoutService;
     @Inject private GoBackNavigator goBackNavigator;
 
@@ -52,6 +55,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        contractorRepository = repositoryProducer.getContractorRepository();
         initializeGoBackButton();
         this.bundle = resourceBundle;
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);

@@ -1,6 +1,9 @@
 package com.karol.repository;
 
 import com.karol.model.Contractor;
+import com.karol.repository.access.Transactional;
+import com.karol.repository.utils.DatabaseException;
+import com.karol.repository.utils.QueryParameter;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -43,9 +46,16 @@ public class ContractorRepository {
         );
     }
 
+    @Transactional
     public Contractor persist(Contractor contractor) throws DatabaseException {
         checkPersistingInDatabase(contractor);
         return contractorRepository.persist(contractor);
+    }
+
+    @Transactional
+    public Contractor update(Contractor contractor) throws DatabaseException {
+        checkPersistingInDatabase(contractor);
+        return contractorRepository.update(contractor);
     }
 
     private void checkPersistingInDatabase(Contractor contractor) throws DatabaseException {
@@ -56,12 +66,6 @@ public class ContractorRepository {
         if (!contractor.getNip().equals("") && findByNip(contractor.getNip()).isPresent()) {
             throw new DatabaseException("nip.constraints.exception");
         }
-    }
-
-
-    public Contractor update(Contractor contractor) throws DatabaseException {
-        checkPersistingInDatabase(contractor);
-        return contractorRepository.update(contractor);
     }
 
     public void delete(Contractor contractor) {

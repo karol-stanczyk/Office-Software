@@ -1,4 +1,4 @@
-package com.karol.repository;
+package com.karol.repository.utils;
 
 public class DatabaseException extends Exception {
 

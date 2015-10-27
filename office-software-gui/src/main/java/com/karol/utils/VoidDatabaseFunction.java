@@ -1,6 +1,6 @@
 package com.karol.utils;
 
-import com.karol.repository.DatabaseException;
+import com.karol.repository.utils.DatabaseException;
 
 @FunctionalInterface
 public interface VoidDatabaseFunction {

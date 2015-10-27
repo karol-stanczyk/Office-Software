@@ -1,4 +1,4 @@
-package com.karol.repository;
+package com.karol.repository.utils;
 
 import java.util.HashMap;
 import java.util.Map;
