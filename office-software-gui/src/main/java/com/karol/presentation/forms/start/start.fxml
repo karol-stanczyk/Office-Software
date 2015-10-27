@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.start.StartPresenter"
+           prefWidth="400.0" prefHeight="200.0" styleClass="start-view">
+    <GridPane StackPane.alignment="CENTER">
+        <Label text="%application.starting" GridPane.rowIndex="0" GridPane.halignment="CENTER" styleClass="form-header-text"/>
+        <ProgressIndicator StackPane.alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" styleClass="progress-indicator"/>
+    </GridPane>
+
+</StackPane>

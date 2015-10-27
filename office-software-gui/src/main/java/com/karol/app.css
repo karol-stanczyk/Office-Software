@@ -78,3 +78,13 @@ TableView .table-column {
     -fx-font-weight: bold;
     -fx-font-style: italic;
 }
+
+.start-view {
+    -fx-border-width: 4px;
+    -fx-border-color: black;
+}
+
+.progress-indicator {
+    -fx-padding: 10 10 10 10;
+    -fx-progress-color: #8f1101;
+}

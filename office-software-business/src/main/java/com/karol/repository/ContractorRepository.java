@@ -58,6 +58,11 @@ public class ContractorRepository {
         return contractorRepository.update(contractor);
     }
 
+    @Transactional
+    public void delete(Contractor contractor) {
+        contractorRepository.delete(contractor);
+    }
+
     private void checkPersistingInDatabase(Contractor contractor) throws DatabaseException {
         Optional<Contractor> contractorPesel = findByPesel(contractor.getPesel());
         if (!contractor.getPesel().equals("") && contractorPesel.isPresent() && !contractorPesel.get().getId().equals(contractor.getId())) {
@@ -66,9 +71,5 @@ public class ContractorRepository {
         if (!contractor.getNip().equals("") && findByNip(contractor.getNip()).isPresent()) {
             throw new DatabaseException("nip.constraints.exception");
         }
-    }
-
-    public void delete(Contractor contractor) {
-        contractorRepository.delete(contractor);
     }
 }
