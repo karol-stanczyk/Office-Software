@@ -29,31 +29,30 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Stage loadingPage = createLoadingPage();
         loadingPage.show();
-            new Thread(() -> {
-                try {
-                    initializeApplicationData(stage);
-                    Platform.runLater(() -> {
-                        setApplicationIcon(stage);
-                        configureApplicationStage(stage);
-                        stage.show();
-                    });
-                } catch (Exception e) {
-                    log.error(e);
-                    stage.close();
-                } finally {
-                    Platform.runLater(loadingPage::close);
-                }
-            }).start();
+        new Thread(() -> {
+            try {
+                initializeApplicationData(stage);
+                Platform.runLater(() -> {
+                    setApplicationIcon(stage);
+                    configureApplicationStage(stage);
+                    stage.show();
+                });
+            } catch (Exception e) {
+                log.error(e);
+                stage.close();
+            } finally {
+                Platform.runLater(loadingPage::close);
+            }
+        }).start();
     }
 
     private void initializeApplicationData(Stage stage) throws Exception {
         createDatabaseDirectory();
         Localization.setLocale(new Locale("pl", "PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
-        EntityManager entityManager = Injector.instantiateModelOrService(EntityManager.class);
         ViewsCache.init();
         layoutService.setApplicationStage(stage);
-        setCloseEvent(stage, layoutService, entityManager);
+        setCloseEvent(stage, layoutService);
     }
 
     private Stage createLoadingPage() {
@@ -83,10 +82,9 @@ public class App extends Application {
         scene.getStylesheets().add(uri);
     }
 
-    private void setCloseEvent(Stage stage, LayoutService layoutService, EntityManager entityManager) {
+    private void setCloseEvent(Stage stage, LayoutService layoutService) {
         stage.setOnCloseRequest(event -> {
             layoutService.closeApplication();
-            entityManager.close();
             event.consume();
         });
     }

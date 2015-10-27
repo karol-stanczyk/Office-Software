@@ -3,11 +3,15 @@ package com.karol.utils.notifications;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.utils.Bundles;
 import com.karol.utils.functions.VoidFunction;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.control.action.ActionUtils;
 
 import javax.inject.Inject;
 
@@ -39,6 +43,11 @@ public class NotificationsService {
     }
 
     public static void showConfirmation(String message, VoidFunction function) {
+//        Notifications.create()
+//                .text(message)
+//                .position(Pos.CENTER)
+//                .action(new Action("Tak", actionEvent -> function.run()), ActionUtils.ActionTextBehavior.HIDE)
+//                .showConfirm();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
         alert.setTitle(Bundles.get("confirmation.title"));
         alert.setHeaderText(null);
