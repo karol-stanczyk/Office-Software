@@ -42,7 +42,7 @@ public class DateFormatter {
         };
     }
 
-    public static Date fromLocaDate(LocalDate localDate) {
+    public static Date fromLocalDate(LocalDate localDate) {
         Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         return Date.from(instant);
     }

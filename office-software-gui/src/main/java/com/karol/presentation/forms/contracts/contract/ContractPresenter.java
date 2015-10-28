@@ -119,8 +119,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
         contract.setContractor(contractor);
         contract.setNumber(contractNumber.getText());
         contract.setPeriod(contractPeriod.getValue().getValue());
-        contract.setPaymentDate(DateFormatter.fromLocaDate(paymentDate.getValue()));
-        contract.setValidityPeriod(DateFormatter.fromLocaDate(validityPeriod.getValue()));
+        contract.setPaymentDate(DateFormatter.fromLocalDate(paymentDate.getValue()));
+        contract.setValidityPeriod(DateFormatter.fromLocalDate(validityPeriod.getValue()));
         return contract;
     }
 
