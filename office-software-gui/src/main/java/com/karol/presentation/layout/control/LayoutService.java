@@ -17,10 +17,13 @@ public class LayoutService {
     @Inject private EntityManager entityManager;
 
     public void closeApplication() {
-        NotificationsService.showConfirmation(Bundles.get("application.close.contentText"), () -> {
-            entityManager.close();
-            applicationStage.close();
-        });
+        NotificationsService.showConfirmation(
+                Bundles.get("application.close.title"),
+                Bundles.get("application.close.contentText"),
+                () -> {
+                    entityManager.close();
+                    applicationStage.close();
+                });
     }
 
     public void showView(Parent parent) {

@@ -7,6 +7,7 @@ import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.repository.access.EntityManager;
 import com.karol.utils.Bundles;
+import com.karol.utils.notifications.NotificationsService;
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,7 +40,7 @@ public class App extends Application {
                 });
             } catch (Exception e) {
                 log.error(e);
-                stage.close();
+                Platform.runLater(stage::close);
             } finally {
                 Platform.runLater(loadingPage::close);
             }
@@ -50,6 +51,7 @@ public class App extends Application {
         createDatabaseDirectory();
         Localization.setLocale(new Locale("pl", "PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);
+        NotificationsService.primaryStage = stage;
         ViewsCache.init();
         layoutService.setApplicationStage(stage);
         setCloseEvent(stage, layoutService);
