@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
 
 import static com.karol.utils.validation.Validators.*;
 
-public class ContractorPresenter implements Initializable, Cleanable, Validator {
+public class ContractorPresenter extends Validator implements Initializable, Cleanable {
 
     @FXML private TextField contractorName;
     @FXML private TextField contractorLastName;
@@ -54,22 +54,19 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     private Property<Action> action;
     private Contractor editContractor;
 
-    private ValidationSupport validation;
-
     private ResourceBundle bundle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
         initializeRepositories();
         initializeGoBackButton();
         this.bundle = resourceBundle;
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);
-        this.validation = new ValidationSupport();
-        this.validation.setValidationDecorator(new CustomValidationDecoration());
-        registerValidators();
     }
 
-    private void registerValidators() {
+    @Override
+    protected void registerValidators() {
         validation.registerValidator(contractorName, onlyLettersValidator());
         validation.registerValidator(contractorLastName, combine(notEmptyValidator(), onlyLettersValidator()));
         validation.registerValidator(contractorAddress, combine(notEmptyValidator(), onlyLettersValidator()));

@@ -17,6 +17,7 @@ import com.karol.utils.Bundles;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.KeyBinding;
 import com.karol.utils.notifications.NotificationsService;
+import com.karol.utils.validation.Validators;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -35,7 +36,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ContractPresenter implements Initializable, Cleanable, Validator {
+import static com.karol.utils.validation.Validators.notEmptyValidator;
+
+public class ContractPresenter extends Validator implements Initializable, Cleanable {
 
     @FXML private Label formHeaderText;
     @FXML private TextField contractNumber;
@@ -57,11 +60,20 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        super.initialize(url, resourceBundle);
         this.bundle = resourceBundle;
         initializeValues();
         initializeRepositories();
         initializePeriodList();
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContract);
+    }
+
+    @Override
+    protected void registerValidators() {
+        validation.registerValidator(contractNumber, notEmptyValidator());
+        validation.registerValidator(contractPeriod, notEmptyValidator());
+        validation.registerValidator(validityPeriod, notEmptyValidator());
+        validation.registerValidator(paymentDate, notEmptyValidator());
     }
 
     @Override
@@ -74,7 +86,7 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
 
     @Override
     public boolean validate() {
-        return false;
+        return !validation.isInvalid();
     }
 
     @FXML
@@ -84,17 +96,21 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
 
     @FXML
     public void saveContract() {
-        Contract contract = createContract();
-        try {
-            FormModeRunner.runWithException(
-                    () -> contractRepository.persist(contract, contractor),
-                    () -> System.out.println("update"),
-                    formMode.getValue()
-            );
-            notificationsService.showInformation(bundle.getString("notifications.contract.saved.properly"));
-            cleanForm();
-        } catch (DatabaseException e) {
-            notificationsService.showError(Bundles.get(e.getMessage()));
+        if (validate()) {
+            Contract contract = createContract();
+            try {
+                FormModeRunner.runWithException(
+                        () -> contractRepository.persist(contract, contractor),
+                        () -> System.out.println("update"),
+                        formMode.getValue()
+                );
+                notificationsService.showInformation(bundle.getString("notifications.contract.saved.properly"));
+                cleanForm();
+            } catch (DatabaseException e) {
+                notificationsService.showError(Bundles.get(e.getMessage()));
+            }
+        } else {
+            Validators.showValidationResult(validation);
         }
     }
 
