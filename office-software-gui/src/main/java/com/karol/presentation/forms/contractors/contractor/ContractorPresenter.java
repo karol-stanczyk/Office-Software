@@ -13,8 +13,8 @@ import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.KeyBinding;
 import com.karol.utils.notifications.NotificationsService;
-import com.karol.utils.validation.FieldsValidator;
-import com.karol.utils.validation.TextFieldsValidator;
+import com.karol.utils.validation.CustomValidationDecoration;
+import com.karol.utils.validation.Validators;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -24,10 +24,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import org.controlsfx.validation.ValidationSupport;
 
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.karol.utils.validation.Validators.*;
 
 public class ContractorPresenter implements Initializable, Cleanable, Validator {
 
@@ -51,6 +54,8 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
     private Property<Action> action;
     private Contractor editContractor;
 
+    private ValidationSupport validation;
+
     private ResourceBundle bundle;
 
     @Override
@@ -59,6 +64,15 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
         initializeGoBackButton();
         this.bundle = resourceBundle;
         KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);
+        this.validation = new ValidationSupport();
+        this.validation.setValidationDecorator(new CustomValidationDecoration());
+        registerValidators();
+    }
+
+    private void registerValidators() {
+        validation.registerValidator(contractorName, onlyLettersValidator());
+        validation.registerValidator(contractorLastName, combine(notEmptyValidator(), onlyLettersValidator()));
+        validation.registerValidator(contractorAddress, combine(notEmptyValidator(), onlyLettersValidator()));
     }
 
     @Override
@@ -69,23 +83,16 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
         contractorAddress.setText("");
         contractorPesel.setText("");
         contractorNip.setText("");
-        FieldsValidator.removeErrorStyleClasses(contractorName, contractorLastName, contractorAddress, contractorPesel, contractorNip);
     }
 
     @Override
-    public FieldsValidator validate() {
-        return new TextFieldsValidator()
-                .forField(contractorName).notEmpty().onlyLetters().validate()
-                .forField(contractorLastName).notEmpty().onlyLetters().validate()
-                .forField(contractorAddress).notEmpty().validate()
-                .forField(contractorPesel).onlyNumbers().validate()
-                .forField(contractorNip).onlyNumbers().validate();
+    public boolean validate() {
+        return !validation.isInvalid();
     }
 
     @FXML
     public void saveContractor() {
-        FieldsValidator validator = validate();
-        if (validator.valid()) {
+        if (validate()) {
             Contractor contractor = createContractor();
             try {
                 FormModeRunner.runWithException(
@@ -98,7 +105,7 @@ public class ContractorPresenter implements Initializable, Cleanable, Validator 
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
         } else {
-            notificationsService.showError(validator.getErrorString(), 5);
+            Validators.showValidationResult(validation);
         }
     }
 

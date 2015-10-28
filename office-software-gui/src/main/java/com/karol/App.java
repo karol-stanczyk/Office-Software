@@ -8,6 +8,7 @@ import com.karol.presentation.layout.control.LayoutService;
 import com.karol.repository.access.EntityManager;
 import com.karol.utils.Bundles;
 import com.karol.utils.notifications.NotificationsService;
+import com.karol.utils.validation.Validators;
 import impl.org.controlsfx.i18n.Localization;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -48,6 +49,7 @@ public class App extends Application {
     }
 
     private void initializeApplicationData(Stage stage) throws Exception {
+        Validators.createValidators();
         createDatabaseDirectory();
         Localization.setLocale(new Locale("pl", "PL"));
         LayoutService layoutService = Injector.instantiateModelOrService(LayoutService.class);

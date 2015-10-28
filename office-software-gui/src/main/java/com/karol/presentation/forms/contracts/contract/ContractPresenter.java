@@ -17,7 +17,6 @@ import com.karol.utils.Bundles;
 import com.karol.utils.DateFormatter;
 import com.karol.utils.KeyBinding;
 import com.karol.utils.notifications.NotificationsService;
-import com.karol.utils.validation.FieldsValidator;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -74,8 +73,8 @@ public class ContractPresenter implements Initializable, Cleanable, Validator {
     }
 
     @Override
-    public FieldsValidator validate() {
-        return null;
+    public boolean validate() {
+        return false;
     }
 
     @FXML
