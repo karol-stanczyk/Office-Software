@@ -4,12 +4,11 @@ import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
+import com.karol.presentation.forms.ListPresenter;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractRepository;
 import com.karol.repository.access.RepositoryProducer;
-import com.karol.utils.Bundles;
-import com.karol.utils.functions.VoidFunction;
 import com.karol.utils.notifications.NotificationsService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ContractListPresenter implements Initializable, Cleanable {
+public class ContractListPresenter extends ListPresenter implements Initializable, Cleanable {
 
     @FXML private TableView<ContractListTableRow> contractListTable;
     @FXML private Label contractorName;
@@ -66,13 +65,21 @@ public class ContractListPresenter implements Initializable, Cleanable {
     @FXML
     public void deleteContract() {
         NotificationsService.showConfirmation(bundle.getString("confirmation.contract.delete"), () ->
-                        actionWithContractSelected(() -> {
+                        actionWithRowSelected(contractListTable, () -> {
                             contractListTable.getSelectionModel().getSelectedItems().stream()
                                     .forEach(row -> contractRepository.delete(row.getContract(), contractor));
                             refreshTable();
                             notificationsService.showInformation(bundle.getString("contract.delete.success"));
                         })
         );
+    }
+
+    @FXML
+    public void editContract() {
+        actionWithRowSelected(contractListTable, () -> {
+            Contract contract = contractListTable.getSelectionModel().getSelectedItem().getContract();
+            layoutService.showView(ViewsCache.contractView().getView(contractor, contract));
+        });
     }
 
     public void refreshTable() {
@@ -91,18 +98,6 @@ public class ContractListPresenter implements Initializable, Cleanable {
         this.contractorName.setText(contractor.getName());
         this.contractorLastName.setText(contractor.getLastName());
         this.contractorAddress.setText(contractor.getAddress());
-    }
-
-    public void actionWithContractSelected(VoidFunction function) {
-        if (isRowSelected()) {
-            function.run();
-        } else {
-            notificationsService.showError(Bundles.get("no.rows.selected.exception"));
-        }
-    }
-
-    private boolean isRowSelected() {
-        return !contractListTable.getSelectionModel().getSelectedItems().isEmpty();
     }
 
     private void initializeRepositories() {

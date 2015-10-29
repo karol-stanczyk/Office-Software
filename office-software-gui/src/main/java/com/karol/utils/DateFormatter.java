@@ -46,4 +46,8 @@ public class DateFormatter {
         Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
         return Date.from(instant);
     }
+
+    public static LocalDate toLocalDate(Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 }

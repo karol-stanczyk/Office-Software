@@ -57,6 +57,7 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     private Contractor contractor;
     // Action variables
     private Property<Action> formMode;
+    private Contract contract;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -100,12 +101,14 @@ public class ContractPresenter extends Validator implements Initializable, Clean
             Contract contract = createContract();
             try {
                 FormModeRunner.runWithException(
-                        () -> contractRepository.persist(contract, contractor),
-                        () -> System.out.println("update"),
+                        () -> {
+                            contractRepository.persist(contract, contractor);
+                            cleanForm();
+                        },
+                        () -> contractRepository.update(contract),
                         formMode.getValue()
                 );
                 notificationsService.showInformation(bundle.getString("notifications.contract.saved.properly"));
-                cleanForm();
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
@@ -116,7 +119,12 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     }
 
     private Contract createContract() {
-        Contract contract = new Contract();
+        Contract contract;
+        if (formMode.getValue() == Action.NEW) {
+            contract = new Contract();
+        } else {
+            contract = this.contract;
+        }
         contract.setContractor(contractor);
         contract.setNumber(contractNumber.getText());
         contract.setPeriod(contractPeriod.getValue().getValue());
@@ -132,6 +140,14 @@ public class ContractPresenter extends Validator implements Initializable, Clean
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+        contractNumber.setText(contract.getNumber());
+        contractPeriod.getSelectionModel().select(new AbstractComboBoxEnum<>(contract.getPeriod()));
+        validityPeriod.setValue(DateFormatter.toLocalDate(contract.getValidityPeriod()));
+        paymentDate.setValue(DateFormatter.toLocalDate(contract.getPaymentDate()));
     }
 
     private void initializePeriodList() {

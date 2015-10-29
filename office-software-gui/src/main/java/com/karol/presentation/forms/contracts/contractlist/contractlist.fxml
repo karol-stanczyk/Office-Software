@@ -60,7 +60,7 @@
             <GridPane hgap="5.0" vgap="2.0" styleClass="working-content-width">
                 <Button text="%button.goBack" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="LEFT" styleClass="action-button" onAction="#goBack"/>
                 <Button text="%button.invoices" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="RIGHT" styleClass="action-button" GridPane.hgrow="ALWAYS"/>
-                <Button text="%button.edit.contract" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="RIGHT" styleClass="action-button"/>
+                <Button text="%button.edit.contract" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="RIGHT" styleClass="action-button" onAction="#editContract"/>
                 <Button text="%button.delete.contract" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="RIGHT" styleClass="action-button" onAction="#deleteContract"/>
             </GridPane>
         </HBox>

@@ -29,4 +29,9 @@ public class ContractRepository {
         contractRepository.delete(contract);
         contractor.getContractList().remove(contract);
     }
+
+    @Transactional
+    public Contract update(Contract contract) {
+        return contractRepository.update(contract);
+    }
 }

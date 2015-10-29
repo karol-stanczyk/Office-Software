@@ -92,11 +92,13 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
             Contractor contractor = createContractor();
             try {
                 FormModeRunner.runWithException(
-                        () -> contractorRepository.persist(contractor),
+                        () -> {
+                            contractorRepository.persist(contractor);
+                            cleanForm();
+                        },
                         () -> contractorRepository.update(contractor),
                         action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
-                cleanForm();
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
