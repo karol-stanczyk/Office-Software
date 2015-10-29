@@ -10,6 +10,18 @@
     -fx-pref-width: 940px;
 }
 
+.two-tables-height {
+    -fx-pref-height: 500px;
+}
+
+.first-table-width {
+    -fx-pref-width: 620;
+}
+
+.second-table-width {
+    -fx-pref-width: 320;
+}
+
 TextField {
     -fx-pref-width: 300px;
     -fx-background-color: transparent, grey, transparent, white;

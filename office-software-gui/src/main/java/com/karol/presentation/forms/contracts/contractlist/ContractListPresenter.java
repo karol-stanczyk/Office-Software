@@ -5,6 +5,7 @@ import com.karol.model.Contractor;
 import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.ListPresenter;
+import com.karol.presentation.forms.invoice.InvoiceView;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractRepository;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 
 import javax.inject.Inject;
 import java.net.URL;
@@ -50,6 +52,7 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.bundle = resourceBundle;
         initializeRepositories();
+        initializeOnRowDoubleClickListener();
     }
 
     @FXML
@@ -82,6 +85,11 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
         });
     }
 
+    @FXML
+    public void invoiceList() {
+        layoutService.showView(new InvoiceView().getView());
+    }
+
     public void refreshTable() {
         contractListTable.setItems(FXCollections.observableList(getContractListTableRows()));
     }
@@ -98,6 +106,16 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
         this.contractorName.setText(contractor.getName());
         this.contractorLastName.setText(contractor.getLastName());
         this.contractorAddress.setText(contractor.getAddress());
+    }
+
+    private void initializeOnRowDoubleClickListener() {
+        contractListTable.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
+                if (mouseEvent.getClickCount() == 2) {
+                    invoiceList();
+                }
+            }
+        });
     }
 
     private void initializeRepositories() {

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TableView?>
+<StackPane id="new-contractor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.invoice.InvoicePresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <HBox alignment="CENTER" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+            <Label styleClass="form-header-text" text="%invoices.header" alignment="CENTER"/>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+            <GridPane alignment="CENTER" prefHeight="560.0" focusTraversable="false" hgap="5.0">
+                <GridPane GridPane.columnIndex="0">
+                    <TableView styleClass="first-table-width">
+
+                    </TableView>
+                </GridPane>
+                <GridPane GridPane.columnIndex="1">
+                    <TableView styleClass="second-table-width">
+
+                    </TableView>
+                </GridPane>
+            </GridPane>
+        </HBox>
+    </GridPane>
+</StackPane>
