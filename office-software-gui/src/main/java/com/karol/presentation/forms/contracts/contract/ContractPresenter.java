@@ -111,6 +111,7 @@ public class ContractPresenter extends Validator implements Initializable, Clean
             }
         } else {
             Validators.showValidationResult(validation);
+            notificationsService.showError(Bundles.get("form.contains.errors"));
         }
     }
 

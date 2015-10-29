@@ -50,9 +50,14 @@ TableView .table-column {
     -fx-alignment: center;
 }
 
-.error-text-field {
-    -fx-background-color: #FFF0F0;
-    -fx-border-color: #DBB1B1;
+.error-field {
+    -fx-border-color: #ff454a;
+    -fx-effect: dropshadow(three-pass-box, rgb(255, 69, 74), 10, 0, 0, 0);
+}
+
+.warning-field {
+    -fx-border-color: #fbf94a;
+    -fx-effect: dropshadow(three-pass-box, rgb(251, 249, 74), 10, 0, 0, 0);
 }
 
 .field-label {

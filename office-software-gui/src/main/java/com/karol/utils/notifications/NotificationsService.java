@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.controlsfx.control.action.Action;
+import org.controlsfx.tools.Utils;
 
 import javax.inject.Inject;
 
@@ -50,7 +51,10 @@ public class NotificationsService {
                 .owner(primaryStage)
                 .position(Pos.CENTER)
                 .title(title)
-                .action(new Action(Bundles.get("button.yes"), actionEvent -> function.run()))
+                .action(new Action(Bundles.get("button.yes"), actionEvent -> {
+                    function.run();
+                    Utils.getWindow(actionEvent.getSource()).hide();
+                }))
                 .showConfirm();
     }
 

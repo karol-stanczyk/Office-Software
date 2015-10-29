@@ -13,7 +13,6 @@ import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.KeyBinding;
 import com.karol.utils.notifications.NotificationsService;
-import com.karol.utils.validation.CustomValidationDecoration;
 import com.karol.utils.validation.Validators;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,13 +23,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import org.controlsfx.validation.ValidationSupport;
 
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.karol.utils.validation.Validators.*;
+import static com.karol.utils.validation.Validators.notEmptyValidator;
+import static com.karol.utils.validation.Validators.onlyLettersValidator;
 
 public class ContractorPresenter extends Validator implements Initializable, Cleanable {
 
@@ -68,8 +67,8 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
     @Override
     protected void registerValidators() {
         validation.registerValidator(contractorName, onlyLettersValidator());
-        validation.registerValidator(contractorLastName, combine(notEmptyValidator(), onlyLettersValidator()));
-        validation.registerValidator(contractorAddress, combine(notEmptyValidator(), onlyLettersValidator()));
+        validation.registerValidator(contractorLastName, onlyLettersValidator());
+        validation.registerValidator(contractorAddress, notEmptyValidator());
     }
 
     @Override
@@ -102,6 +101,7 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
         } else {
+            notificationsService.showError(Bundles.get("form.contains.errors"));
             Validators.showValidationResult(validation);
         }
     }
