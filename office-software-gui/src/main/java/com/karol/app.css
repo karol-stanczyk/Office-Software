@@ -10,6 +10,10 @@
     -fx-pref-width: 940px;
 }
 
+.extended-working-content-width {
+    -fx-pref-width: 980px;
+}
+
 .two-tables-height {
     -fx-pref-height: 500px;
 }
@@ -19,7 +23,11 @@
 }
 
 .second-table-width {
-    -fx-pref-width: 320;
+    -fx-pref-width: 360;
+}
+
+.table-height {
+    -fx-pref-height: 560px;
 }
 
 TextField {

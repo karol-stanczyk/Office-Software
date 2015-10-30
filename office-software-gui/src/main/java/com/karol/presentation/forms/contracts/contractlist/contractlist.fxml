@@ -26,7 +26,7 @@
             <Button text="%button.new.contract" styleClass="long-action-button" onAction="#newContract"/>
         </HBox>
         <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS">
-            <TableView fx:id="contractListTable" prefHeight="560.0" focusTraversable="false">
+            <TableView fx:id="contractListTable" focusTraversable="false" styleClass="table-height">
                 <columns>
                     <TableColumn text="%contract.list.index" prefWidth="40.0">
                         <cellValueFactory >

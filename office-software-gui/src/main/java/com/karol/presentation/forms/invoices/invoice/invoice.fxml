@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<StackPane id="new-invoiceor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.invoices.invoice.InvoicePresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <Label fx:id="formHeaderText" styleClass="form-header-text" text="%invoice.header.new" GridPane.rowIndex="0" GridPane.halignment="CENTER"/>
+
+        <GridPane hgap="7.0" vgap="5.0" GridPane.rowIndex="1">
+            <Label styleClass="field-label" text="%invoice.newValue" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="invoiceNewValue" id="%invoice.newValue" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label styleClass="field-label" text="%invoice.grossValue" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <ComboBox fx:id="invoiceGrossValue" id="%invoice.grossValue" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label styleClass="field-label" text="%invoice.validityPeriod" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <DatePicker fx:id="validityPeriod" id="%invoice.validityPeriod" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label styleClass="field-label" text="%invoice.vat" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <DatePicker fx:id="invoiceVat" id="%invoice.vat" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label styleClass="field-label" text="%invoice.creationDate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <DatePicker fx:id="invoiceCreationDate" id="%invoice.creationDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label styleClass="field-label" text="%invoice.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <DatePicker fx:id="invoicePaymentDate" id="%invoice.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+                <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0" styleClass="action-button" focusTraversable="false"/>
+                <Button text="%button.save" onAction="#saveinvoice" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" styleClass="action-button"/>
+            </GridPane>
+        </GridPane>
+    </GridPane>
+</StackPane>

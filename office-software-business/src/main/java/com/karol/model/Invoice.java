@@ -13,8 +13,9 @@ public class Invoice implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private double netAmount;
-    private double grossAmount;
+    private String number;
+    private double netValue;
+    private double grossValue;
     private double VAT;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,20 +42,20 @@ public class Invoice implements Serializable {
         this.id = id;
     }
 
-    public double getNetAmount() {
-        return netAmount;
+    public double getNetValue() {
+        return netValue;
     }
 
-    public void setNetAmount(double netAmount) {
-        this.netAmount = netAmount;
+    public void setNetValue(double netAmount) {
+        this.netValue = netAmount;
     }
 
-    public double getGrossAmount() {
-        return grossAmount;
+    public double getGrossValue() {
+        return grossValue;
     }
 
-    public void setGrossAmount(double grossAmount) {
-        this.grossAmount = grossAmount;
+    public void setGrossValue(double grossAmount) {
+        this.grossValue = grossAmount;
     }
 
     public double getVAT() {
@@ -95,5 +96,13 @@ public class Invoice implements Serializable {
 
     public void setTransferList(List<Transfer> transferList) {
         this.transferList = transferList;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

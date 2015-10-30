@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.Button?>
+<StackPane id="new-contractor"
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter">
+
+    <GridPane vgap="10.0" alignment="TOP_CENTER">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <HBox alignment="CENTER" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+            <Label styleClass="form-header-text" text="%invoices.header" alignment="CENTER"/>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+            <GridPane hgap="5.0">
+                <Label fx:id="contractNumber" GridPane.columnIndex="0" GridPane.halignment="CENTER" styleClass="bold-label"/>
+            </GridPane>
+        </HBox>
+        <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.hgrow="ALWAYS">
+            <GridPane alignment="CENTER" focusTraversable="false" hgap="5.0">
+                <GridPane GridPane.columnIndex="0" vgap="5.0">
+                    <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                        <Button text="%button.new.invoice" styleClass="long-action-button"/>
+                    </HBox>
+                    <TableView GridPane.rowIndex="1" fx:id="invoiceTable" styleClass="first-table-width, table-height" focusTraversable="false">
+                        <columns>
+                            <TableColumn text="%invoice.list.index" prefWidth="40.0">
+                                <cellValueFactory >
+                                    <PropertyValueFactory property="index"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.number" prefWidth="130.0">
+                                <cellValueFactory >
+                                    <PropertyValueFactory property="number"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.netValue" prefWidth="90.0">
+                                <cellValueFactory >
+                                    <PropertyValueFactory property="netValue"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.grossValue" prefWidth="90.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="grossValue"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.vat" prefWidth="40.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="vat"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.creationDate" prefWidth="120.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="creationDate"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%invoice.list.paymentDate" prefWidth="110.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="paymentDate"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+                </GridPane>
+                <GridPane GridPane.columnIndex="1" vgap="5.0">
+                    <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
+                        <Button text="%button.new.transfer" styleClass="long-action-button"/>
+                    </HBox>
+                    <TableView fx:id="paymentTable" GridPane.rowIndex="1" styleClass="second-table-width, table-height" focusTraversable="false">
+                        <columns>
+                            <TableColumn text="%transfer.list.index" prefWidth="40.0">
+                                <cellValueFactory >
+                                    <PropertyValueFactory property="index"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%transfer.list.netValue" prefWidth="90.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="netValue"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%transfer.list.grossValue" prefWidth="90.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="grossValue"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%transfer.list.vat" prefWidth="40.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="vat"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn text="%transfer.list.paymentDate" prefWidth="100.0">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="paymentDate"/>
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                    </TableView>
+                </GridPane>
+            </GridPane>
+        </HBox>
+        <HBox GridPane.rowIndex="3" GridPane.hgrow="ALWAYS" alignment="CENTER">
+            <GridPane hgap="5.0" vgap="2.0" styleClass="extended-working-content-width">
+                <Button text="%button.goBack" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="LEFT" styleClass="action-button" onAction="#goBack"/>
+                <Button text="%button.edit" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="RIGHT" styleClass="action-button" GridPane.hgrow="ALWAYS"/>
+                <Button text="%button.delete" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="RIGHT" styleClass="action-button"/>
+            </GridPane>
+        </HBox>
+    </GridPane>
+</StackPane>

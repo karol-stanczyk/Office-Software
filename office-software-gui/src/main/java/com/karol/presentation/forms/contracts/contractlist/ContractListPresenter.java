@@ -5,7 +5,6 @@ import com.karol.model.Contractor;
 import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.ListPresenter;
-import com.karol.presentation.forms.invoice.InvoiceView;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractRepository;
@@ -87,7 +86,10 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
 
     @FXML
     public void invoiceList() {
-        layoutService.showView(new InvoiceView().getView());
+        actionWithRowSelected(contractListTable, () -> {
+            Contract selectedContract = contractListTable.getSelectionModel().getSelectedItem().getContract();
+            layoutService.showView(ViewsCache.getInvoiceListView().getView(selectedContract));
+        });
     }
 
     public void refreshTable() {
