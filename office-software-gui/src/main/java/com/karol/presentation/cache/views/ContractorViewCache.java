@@ -45,6 +45,7 @@ public class ContractorViewCache implements ViewCache {
         return contractorView;
     }
 
+    @Override
     public ContractorPresenter presenter(){
         return contractorPresenter;
     }

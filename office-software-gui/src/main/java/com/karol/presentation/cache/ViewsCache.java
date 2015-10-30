@@ -7,50 +7,28 @@ import com.karol.presentation.forms.contracts.contract.ContractPresenter;
 import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ViewsCache {
 
-    private static ContractorViewCache contractorView;
-    private static ContractorListViewCache contractorListView;
-
-    private static ContractViewCache contractView;
-    private static ContractListViewCache contractListView;
-
-    private static InvoiceListViewCache invoiceListView;
+    private static Map<Class, ViewCache> viewsCached;
 
     public static void init() {
-        contractorView = new ContractorViewCache();
-        contractorListView = new ContractorListViewCache();
-        contractView = new ContractViewCache();
-        contractListView = new ContractListViewCache();
-        invoiceListView = new InvoiceListViewCache();
-    }
-
-    public static ContractorViewCache contractorView() {
-        return contractorView;
-    }
-
-    public static ContractorListViewCache contractorListView() {
-        return contractorListView;
-    }
-
-    public static ContractViewCache contractView() {
-        return contractView;
-    }
-
-    public static ContractListViewCache contractListView() {
-        return contractListView;
-    }
-
-    public static InvoiceListViewCache getInvoiceListView() {
-        return invoiceListView;
+        viewsCached = new HashMap<>();
+        viewsCached.put(ContractorPresenter.class, new ContractorViewCache());
+        viewsCached.put(ContractorListPresenter.class, new ContractorListViewCache());
+        viewsCached.put(ContractPresenter.class, new ContractViewCache());
+        viewsCached.put(ContractListPresenter.class, new ContractListViewCache());
+        viewsCached.put(InvoiceListPresenter.class, new InvoiceListViewCache());
     }
 
     public static ViewCache getView(Class presenter) {
-        if (presenter.equals(ContractorPresenter.class)) return contractorView;
-        if (presenter.equals(ContractorListPresenter.class)) return contractorListView;
-        if (presenter.equals(ContractPresenter.class)) return contractView;
-        if (presenter.equals(ContractListPresenter.class)) return contractListView;
-        if (presenter.equals(InvoiceListPresenter.class)) return invoiceListView;
-        return null;
+        return viewsCached.get(presenter);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getViewCache(final T clazz) {
+        return (T) viewsCached.values().stream().filter(c -> c.presenter().getClass().equals(clazz.getClass())).findFirst().get();
     }
 }

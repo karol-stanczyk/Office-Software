@@ -3,6 +3,7 @@ package com.karol.presentation.cache.views;
 import com.karol.model.Contract;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListView;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 
 public class InvoiceListViewCache implements ViewCache {
@@ -33,5 +34,10 @@ public class InvoiceListViewCache implements ViewCache {
     @Override
     public void refresh() {
         invoiceListPresenter.refreshTable();
+    }
+
+    @Override
+    public Initializable presenter() {
+        return invoiceListPresenter;
     }
 }

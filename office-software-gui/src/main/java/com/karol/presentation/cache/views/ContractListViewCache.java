@@ -36,6 +36,7 @@ public class ContractListViewCache implements ViewCache {
         contractListView = contractListFxmlView.getView();
     }
 
+    @Override
     public ContractListPresenter presenter() {
         return contractListPresenter;
     }
