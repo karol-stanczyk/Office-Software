@@ -13,4 +13,8 @@ public class NumberFormatter {
     public static String fromDoubleToSingleValue(double number) {
         return INTEGER_FORMAT.format(number);
     }
+
+    public static double toDouble(String number) {
+        return Double.parseDouble(number);
+    }
 }

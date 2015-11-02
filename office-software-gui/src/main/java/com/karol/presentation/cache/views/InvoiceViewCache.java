@@ -17,7 +17,7 @@ public class InvoiceViewCache implements ViewCache {
 
     @Override
     public Parent getView() {
-        invoicePresenter.setCurrentDate();
+        invoicePresenter.setInvoiceCreationDate();
         return invoiceView;
     }
 
