@@ -103,8 +103,6 @@ public class ContractorListPresenter extends ListPresenter implements Initializa
                 .collect(Collectors.toList());
     }
 
-
-
     private void initializeFilter() {
         contractorListFilter.textProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {

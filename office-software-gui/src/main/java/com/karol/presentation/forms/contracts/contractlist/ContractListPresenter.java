@@ -3,10 +3,8 @@ package com.karol.presentation.forms.contracts.contractlist;
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.presentation.cache.ViewsCache;
-import com.karol.presentation.cache.views.ContractViewCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.ListPresenter;
-import com.karol.presentation.forms.contracts.contract.ContractPresenter;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractRepository;
@@ -82,7 +80,7 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
     public void editContract() {
         actionWithRowSelected(contractListTable, () -> {
             Contract contract = contractListTable.getSelectionModel().getSelectedItem().getContract();
-            layoutService.showView(ViewsCache.getViewCache(ContractViewCache.class).getView(contractor, contract));
+            layoutService.showView(ViewsCache.contractView().getView(contractor, contract));
         });
     }
 
@@ -90,7 +88,7 @@ public class ContractListPresenter extends ListPresenter implements Initializabl
     public void invoiceList() {
         actionWithRowSelected(contractListTable, () -> {
             Contract selectedContract = contractListTable.getSelectionModel().getSelectedItem().getContract();
-            layoutService.showView(ViewsCache.getInvoiceListView().getView(selectedContract));
+            layoutService.showView((ViewsCache.invoiceListView().getView(selectedContract)));
         });
     }
 
