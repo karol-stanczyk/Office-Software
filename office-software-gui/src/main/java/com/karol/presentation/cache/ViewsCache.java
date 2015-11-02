@@ -5,6 +5,7 @@ import com.karol.presentation.forms.contractors.contractor.ContractorPresenter;
 import com.karol.presentation.forms.contractors.contractorlist.ContractorListPresenter;
 import com.karol.presentation.forms.contracts.contract.ContractPresenter;
 import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter;
+import com.karol.presentation.forms.invoices.invoice.InvoicePresenter;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter;
 import javafx.fxml.Initializable;
 
@@ -21,6 +22,7 @@ public class ViewsCache {
         viewsCached.put(ContractorListPresenter.class, new ContractorListViewCache());
         viewsCached.put(ContractPresenter.class, new ContractViewCache());
         viewsCached.put(ContractListPresenter.class, new ContractListViewCache());
+        viewsCached.put(InvoicePresenter.class, new InvoiceViewCache());
         viewsCached.put(InvoiceListPresenter.class, new InvoiceListViewCache());
     }
 
@@ -50,5 +52,9 @@ public class ViewsCache {
 
     public static InvoiceListViewCache invoiceListView() {
         return (InvoiceListViewCache) viewsCached.get(InvoiceListPresenter.class);
+    }
+
+    public static InvoiceViewCache invoiceView() {
+        return (InvoiceViewCache) viewsCached.get(InvoicePresenter.class);
     }
 }

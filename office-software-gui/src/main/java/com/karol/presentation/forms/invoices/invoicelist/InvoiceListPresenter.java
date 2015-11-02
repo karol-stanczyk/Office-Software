@@ -3,6 +3,7 @@ package com.karol.presentation.forms.invoices.invoicelist;
 import com.karol.model.Contract;
 import com.karol.model.Invoice;
 import com.karol.model.Transfer;
+import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.Cleanable;
 import com.karol.presentation.forms.ListPresenter;
 import com.karol.presentation.layout.control.LayoutService;
@@ -46,6 +47,11 @@ public class InvoiceListPresenter extends ListPresenter implements Initializable
     @FXML
     public void goBack() {
         layoutService.showView(goBackNavigator.getGoBackView(this));
+    }
+
+    @FXML
+    public void newInvoice() {
+        layoutService.showView(ViewsCache.invoiceView().getView());
     }
 
     public void refreshTable() {

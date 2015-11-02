@@ -41,6 +41,7 @@ public class App extends Application {
                 });
             } catch (Exception e) {
                 log.error(e);
+                e.printStackTrace();
                 Platform.runLater(stage::close);
             } finally {
                 Platform.runLater(loadingPage::close);

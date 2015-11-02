@@ -28,7 +28,7 @@
             <GridPane alignment="CENTER" focusTraversable="false" hgap="5.0">
                 <GridPane GridPane.columnIndex="0" vgap="5.0">
                     <HBox alignment="BASELINE_RIGHT" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS">
-                        <Button text="%button.new.invoice" styleClass="long-action-button"/>
+                        <Button text="%button.new.invoice" styleClass="long-action-button" onAction="#newInvoice"/>
                     </HBox>
                     <TableView GridPane.rowIndex="1" fx:id="invoiceTable" styleClass="first-table-width, table-height" focusTraversable="false">
                         <columns>
