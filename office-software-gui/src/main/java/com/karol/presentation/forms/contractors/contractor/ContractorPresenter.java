@@ -61,7 +61,7 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
         initializeRepositories();
         initializeGoBackButton();
         this.bundle = resourceBundle;
-        KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContractor);
+        KeyBinding.registerActionForAllChildren(KeyCode.ENTER, root, this::saveContractor);
     }
 
     @Override

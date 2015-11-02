@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import static com.karol.utils.validation.Validators.*;
+
 public class InvoicePresenter extends Validator implements Initializable, Cleanable {
 
     @FXML private TextField invoiceNumber;
@@ -39,7 +41,12 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
 
     @Override
     protected void registerValidators() {
-
+        validation.registerValidator(invoiceNumber, notEmptyValidator());
+        validation.registerValidator(invoiceNetValue, cashValidator());
+        validation.registerValidator(invoiceGrossValue, cashValidator());
+        validation.registerValidator(invoiceVat, onlyNumbersValidator());
+        validation.registerValidator(invoiceCreationDate, dateValidator());
+        validation.registerValidator(invoicePaymentDate, dateValidator());
     }
 
     @Override

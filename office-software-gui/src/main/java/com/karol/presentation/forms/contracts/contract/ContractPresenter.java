@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.karol.utils.validation.Validators.dateValidator;
 import static com.karol.utils.validation.Validators.notEmptyValidator;
 
 public class ContractPresenter extends Validator implements Initializable, Cleanable {
@@ -66,14 +67,14 @@ public class ContractPresenter extends Validator implements Initializable, Clean
         initializeValues();
         initializeRepositories();
         initializePeriodList();
-        KeyBinding.registerAction(KeyCode.ENTER, root, this::saveContract);
+        KeyBinding.registerActionForAllChildren(KeyCode.ENTER, root, this::saveContract);
     }
 
     @Override
     protected void registerValidators() {
         validation.registerValidator(contractNumber, notEmptyValidator());
-        validation.registerValidator(contractPeriod, notEmptyValidator());
-        validation.registerValidator(validityPeriod, notEmptyValidator());
+        validation.registerValidator(contractPeriod, dateValidator());
+        validation.registerValidator(validityPeriod, dateValidator());
         validation.registerValidator(paymentDate, notEmptyValidator());
     }
 
