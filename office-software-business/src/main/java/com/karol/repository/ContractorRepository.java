@@ -11,8 +11,7 @@ import java.util.Optional;
 
 public class ContractorRepository {
 
-    @Inject
-    private CrudRepository<Contractor> contractorRepository;
+    @Inject private CrudRepository<Contractor> contractorRepository;
 
     public List<Contractor> findAll() {
         return contractorRepository.findWithNamedQuery(Contractor.FIND_ALL);
