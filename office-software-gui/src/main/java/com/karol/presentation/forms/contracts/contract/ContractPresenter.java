@@ -101,15 +101,14 @@ public class ContractPresenter extends Validator implements Initializable, Clean
         if (validate()) {
             Contract contract = createContract();
             try {
-                FormModeRunner.runWithException(
-                        () -> {
+                FormModeRunner.actions()
+                        .inNewMode(() -> {
                             contractRepository.persist(contract, contractor);
                             cleanForm();
-                        },
-                        () -> contractRepository.update(contract),
-                        formMode.getValue()
-                );
-                notificationsService.showInformation(bundle.getString("notifications.contract.saved.properly"));
+                        })
+                        .inEditMode(() -> contractRepository.update(contract))
+                        .run(formMode.getValue());
+                notificationsService.showInformation(bundle.getString("notifications.contract23.saved.properly"));
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
@@ -160,10 +159,10 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     }
 
     private void applyFormMode() {
-        FormModeRunner.run(
-                () -> formHeaderText.setText(bundle.getString("new.contract")),
-                () -> formHeaderText.setText(bundle.getString("new.contract.edit")),
-                formMode.getValue());
+        FormModeRunner.actions()
+                .inNewMode(() -> formHeaderText.setText(bundle.getString("new.contract")))
+                .inEditMode(() -> formHeaderText.setText(bundle.getString("new.contract.edit")))
+                .run(formMode.getValue());
     }
 
     private void initializeValues() {

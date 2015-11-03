@@ -1,31 +1,41 @@
 package com.karol.presentation.forms;
 
 import com.karol.presentation.navigation.Action;
-import com.karol.repository.utils.DatabaseException;
-import com.karol.utils.functions.VoidDatabaseFunction;
 import com.karol.utils.functions.VoidFunction;
 
 public class FormModeRunner {
 
-    public static void runWithException(VoidDatabaseFunction newMode, VoidDatabaseFunction editMode, Action mode) throws DatabaseException {
-        switch (mode) {
-            case NEW:
-                newMode.run();
-                break;
-            case EDIT:
-                editMode.run();
-                break;
+    private VoidFunction newModeFunction;
+    private VoidFunction editModeFunction;
+
+    private FormModeRunner() {
+    }
+
+    public static FormModeRunner actions() {
+        return new FormModeRunner();
+    }
+
+    public FormModeRunner inNewMode(VoidFunction function) {
+        this.newModeFunction = function;
+        return this;
+    }
+
+    public FormModeRunner inEditMode(VoidFunction function) {
+        this.editModeFunction = function;
+        return this;
+    }
+
+    public void run(Action action) {
+        switch (action) {
+            case NEW: {
+                newModeFunction.run();
+            }
+            break;
+            case EDIT: {
+                editModeFunction.run();
+            }
+            break;
         }
     }
 
-    public static void run(VoidFunction newMode, VoidFunction editMode, Action mode) {
-        switch (mode) {
-            case NEW:
-                newMode.run();
-                break;
-            case EDIT:
-                editMode.run();
-                break;
-        }
-    }
 }

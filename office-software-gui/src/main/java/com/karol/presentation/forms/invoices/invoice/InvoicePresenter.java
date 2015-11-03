@@ -90,13 +90,10 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
         if (validate()) {
             Invoice invoice = createInvoice();
             try {
-                FormModeRunner.runWithException(
-                        () -> {
-                            //TODO(Karol S.) save invoice
-                            cleanForm();
-                        },
-                        () -> System.out.println("TODO (Karol S.) update invoice"),
-                        action.getValue());
+                FormModeRunner.actions()
+                        .inNewMode(() -> cleanForm())
+                        .inEditMode(() -> System.out.println("TODO (Karol S.) update invoice"))
+                        .run(action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
@@ -143,9 +140,9 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
     }
 
     private void applyFormMode() {
-        FormModeRunner.run(
-                () -> formHeaderText.setText(bundle.getString("new.contractor")),
-                () -> formHeaderText.setText(bundle.getString("new.contractor.edit")),
-                action.getValue());
+        FormModeRunner.actions()
+                .inNewMode(() -> formHeaderText.setText(bundle.getString("new.contractor")))
+                .inEditMode(() -> formHeaderText.setText(bundle.getString("new.contractor.edit")))
+                .run(action.getValue());
     }
 }

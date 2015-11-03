@@ -91,13 +91,13 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
         if (validate()) {
             Contractor contractor = createContractor();
             try {
-                FormModeRunner.runWithException(
-                        () -> {
+                FormModeRunner.actions()
+                        .inNewMode(() -> {
                             contractorRepository.persist(contractor);
                             cleanForm();
-                        },
-                        () -> contractorRepository.update(contractor),
-                        action.getValue());
+                        })
+                        .inEditMode(() -> contractorRepository.update(contractor))
+                        .run(action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
@@ -143,20 +143,20 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
     }
 
     private void applyFormMode() {
-        FormModeRunner.run(
-                () -> formHeaderText.setText(bundle.getString("new.contractor")),
-                () -> formHeaderText.setText(bundle.getString("new.contractor.edit")),
-                action.getValue());
+        FormModeRunner.actions()
+                .inNewMode(() -> formHeaderText.setText(bundle.getString("new.contractor")))
+                .inEditMode(() -> formHeaderText.setText(bundle.getString("new.contractor.edit")))
+                .run(action.getValue());
     }
 
     private void initializeGoBackButton() {
         this.action = new SimpleObjectProperty<>();
         this.action.addListener((observableValue, oldValue, newValue) -> {
             if (newValue != null) {
-                FormModeRunner.run(
-                        () -> goBackButton.setVisible(false),
-                        () -> goBackButton.setVisible(true),
-                        action.getValue());
+                FormModeRunner.actions()
+                        .inNewMode(() -> goBackButton.setVisible(false))
+                        .inEditMode(() -> goBackButton.setVisible(true))
+                        .run(action.getValue());
             }
         });
         this.action.setValue(Action.NEW);
