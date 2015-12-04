@@ -2,6 +2,7 @@ package com.karol.repository;
 
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
+import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
 import com.karol.repository.utils.DatabaseException;
 
@@ -12,6 +13,7 @@ public class ContractRepository {
     @Inject private CrudRepository<Contract> contractRepository;
     @Inject private ContractorRepository contractorRepository;
 
+    @LogEvent
     @Transactional
     public Contract persist(Contract contract, Contractor contractor) {
         contract = contractRepository.persist(contract);
@@ -24,12 +26,14 @@ public class ContractRepository {
         return contract;
     }
 
+    @LogEvent
     @Transactional
     public void delete(Contract contract, Contractor contractor) {
         contractRepository.delete(contract);
         contractor.getContractList().remove(contract);
     }
 
+    @LogEvent
     @Transactional
     public Contract update(Contract contract) {
         return contractRepository.update(contract);

@@ -27,7 +27,7 @@ public class Invoice implements Serializable {
     @ManyToOne
     private Contract contract;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     private List<Transfer> transferList;
 
     public Invoice() {

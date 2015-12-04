@@ -1,5 +1,6 @@
 package com.karol.repository.access;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.karol.repository.ContractRepository;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.InvoiceRepository;
@@ -13,11 +14,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 @Singleton
 public class RepositoryProducer {
 
     private static final Logger log = Logger.getLogger(RepositoryProducer.class);
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Inject private EntityManager entityManager;
     @Inject private ContractorRepository contractorRepository;
@@ -45,22 +48,27 @@ public class RepositoryProducer {
     private <T> T proxy(final T object) {
         return (T) Enhancer.create(object.getClass(),
                 (InvocationHandler) (proxy, method, args) -> {
+                    if (hasAnnotation(method, LogEvent.class)) {
+                        log.debug("Invoke method: " + getMethodName(method) + " with parameters " + mapper.writeValueAsString(Arrays.asList(args)));
+                    }
                     if (hasAnnotation(method, Transactional.class)) {
-                        try {
-                            log.debug("Transaction for method" + getMethodName(method) + "start.");
-                            entityManager.getTransaction().begin();
-                            Object result = method.invoke(object, args);
-                            entityManager.getTransaction().commit();
-                            log.debug("Transaction for method" + getMethodName(method) + "commit.");
-                            return result;
-                        } catch (Exception e) {
-                            entityManager.getTransaction().rollback();
-                            throw new DatabaseException(e.getCause().getMessage());
-                        }
+                        return transactionalHandling(object, method, args);
                     } else {
                         return method.invoke(object, args);
                     }
                 });
+    }
+
+    private <T> Object transactionalHandling(T object, Method method, Object[] args) {
+        try {
+            entityManager.getTransaction().begin();
+            Object result = method.invoke(object, args);
+            entityManager.getTransaction().commit();
+            return result;
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            throw new DatabaseException(e.getCause().getMessage());
+        }
     }
 
     private String getMethodName(Method method) {

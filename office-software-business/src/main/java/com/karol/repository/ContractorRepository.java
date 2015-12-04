@@ -1,6 +1,7 @@
 package com.karol.repository;
 
 import com.karol.model.Contractor;
+import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
 import com.karol.repository.utils.DatabaseException;
 import com.karol.repository.utils.QueryParameter;
@@ -45,18 +46,21 @@ public class ContractorRepository {
         );
     }
 
+    @LogEvent
     @Transactional
     public Contractor persist(Contractor contractor) throws DatabaseException {
         checkPersistingInDatabase(contractor);
         return contractorRepository.persist(contractor);
     }
 
+    @LogEvent
     @Transactional
     public Contractor update(Contractor contractor) throws DatabaseException {
         checkPersistingInDatabase(contractor);
         return contractorRepository.update(contractor);
     }
 
+    @LogEvent
     @Transactional
     public void delete(Contractor contractor) {
         contractorRepository.delete(contractor);
