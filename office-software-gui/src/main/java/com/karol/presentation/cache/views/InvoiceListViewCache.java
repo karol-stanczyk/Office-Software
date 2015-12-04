@@ -28,6 +28,7 @@ public class InvoiceListViewCache implements ViewCache {
 
     public Parent getView(Contract contract) {
         invoiceListPresenter.setContract(contract);
+        invoiceListPresenter.refreshTable();
         return invoiceListView;
     }
 

@@ -8,6 +8,7 @@ import com.karol.presentation.forms.contracts.contract.ContractPresenter;
 import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter;
 import com.karol.presentation.forms.invoices.invoice.InvoicePresenter;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter;
+import com.karol.presentation.forms.invoices.payment.TransferPresenter;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 
@@ -35,6 +36,8 @@ public class GoBackNavigator {
         navigationRules.add(new NavigationRule(InvoiceListPresenter.class, ContractListPresenter.class, true));
         // nowa faktura -> lista faktur
         navigationRules.add(new NavigationRule(InvoicePresenter.class, InvoiceListPresenter.class, true));
+        // nowa płatność -> lista faktur
+        navigationRules.add(new NavigationRule(TransferPresenter.class, InvoiceListPresenter.class, true));
     }
 
     @SuppressWarnings("ConstantConditions")

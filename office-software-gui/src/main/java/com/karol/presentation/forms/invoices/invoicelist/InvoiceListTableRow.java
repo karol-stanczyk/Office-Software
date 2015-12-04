@@ -43,7 +43,7 @@ public class InvoiceListTableRow extends AbstractTableRow {
         return grossValue;
     }
 
-    public String getVAT() {
+    public String getVat() {
         return VAT;
     }
 

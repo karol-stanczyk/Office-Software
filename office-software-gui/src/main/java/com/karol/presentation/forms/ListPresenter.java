@@ -9,11 +9,18 @@ import javax.inject.Inject;
 
 public abstract class ListPresenter {
 
-    @Inject
-    private NotificationsService notificationsService;
+    @Inject private NotificationsService notificationsService;
 
     protected void actionWithRowSelected(TableView tableView, VoidFunction function) {
         if (isRowSelected(tableView)) {
+            function.run();
+        } else {
+            notificationsService.showError(Bundles.get("no.rows.selected.exception"));
+        }
+    }
+
+    protected void actionWithRowSelected(TableView tableView, TableView tableView2, VoidFunction function) {
+        if(isRowSelected(tableView) || isRowSelected(tableView2)) {
             function.run();
         } else {
             notificationsService.showError(Bundles.get("no.rows.selected.exception"));

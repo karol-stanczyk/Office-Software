@@ -2,6 +2,8 @@ package com.karol.repository.access;
 
 import com.karol.repository.ContractRepository;
 import com.karol.repository.ContractorRepository;
+import com.karol.repository.InvoiceRepository;
+import com.karol.repository.TransferRepository;
 import com.karol.repository.utils.DatabaseException;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.InvocationHandler;
@@ -17,12 +19,11 @@ public class RepositoryProducer {
 
     private static final Logger log = Logger.getLogger(RepositoryProducer.class);
 
-    @Inject
-    private EntityManager entityManager;
-    @Inject
-    private ContractorRepository contractorRepository;
-    @Inject
-    private ContractRepository contractRepository;
+    @Inject private EntityManager entityManager;
+    @Inject private ContractorRepository contractorRepository;
+    @Inject private ContractRepository contractRepository;
+    @Inject private InvoiceRepository invoiceRepository;
+    @Inject private TransferRepository transferRepository;
 
     public ContractorRepository getContractorRepository() {
         return proxy(contractorRepository);
@@ -30,6 +31,14 @@ public class RepositoryProducer {
 
     public ContractRepository getContractRepository() {
         return proxy(contractRepository);
+    }
+
+    public InvoiceRepository getInvoiceRepository() {
+        return proxy(invoiceRepository);
+    }
+
+    public TransferRepository getTransferRepository() {
+        return proxy(transferRepository);
     }
 
     @SuppressWarnings("unchecked")

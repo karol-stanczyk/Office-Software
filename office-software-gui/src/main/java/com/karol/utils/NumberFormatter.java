@@ -17,4 +17,12 @@ public class NumberFormatter {
     public static double toDouble(String number) {
         return Double.parseDouble(number);
     }
+
+    public static double fromStringCash(String value) {
+        return Double.valueOf(value.replaceAll(",","."));
+    }
+
+    public static String toStringCash(double value) {
+        return String.valueOf(value).replaceAll("\\.", ",");
+    }
 }

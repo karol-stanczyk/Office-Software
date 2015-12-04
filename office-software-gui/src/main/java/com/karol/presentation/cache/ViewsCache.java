@@ -7,6 +7,7 @@ import com.karol.presentation.forms.contracts.contract.ContractPresenter;
 import com.karol.presentation.forms.contracts.contractlist.ContractListPresenter;
 import com.karol.presentation.forms.invoices.invoice.InvoicePresenter;
 import com.karol.presentation.forms.invoices.invoicelist.InvoiceListPresenter;
+import com.karol.presentation.forms.invoices.payment.TransferPresenter;
 import javafx.fxml.Initializable;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class ViewsCache {
         viewsCached.put(ContractListPresenter.class, new ContractListViewCache());
         viewsCached.put(InvoicePresenter.class, new InvoiceViewCache());
         viewsCached.put(InvoiceListPresenter.class, new InvoiceListViewCache());
+        viewsCached.put(TransferPresenter.class, new TransferViewCache());
     }
 
     public static ViewCache getView(Class presenter) {
@@ -56,5 +58,9 @@ public class ViewsCache {
 
     public static InvoiceViewCache invoiceView() {
         return (InvoiceViewCache) viewsCached.get(InvoicePresenter.class);
+    }
+
+    public static TransferViewCache transferView(){
+        return (TransferViewCache) viewsCached.get(TransferPresenter.class);
     }
 }

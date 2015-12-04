@@ -79,6 +79,7 @@ public class ContractorPresenter extends Validator implements Initializable, Cle
         contractorAddress.setText("");
         contractorPesel.setText("");
         contractorNip.setText("");
+        clearValidation();
     }
 
     @Override

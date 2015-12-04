@@ -24,6 +24,10 @@ public abstract class Validator implements Initializable {
         registerValidators();
     }
 
+    protected void clearValidation() {
+        validation.redecorate();
+    }
+
     protected abstract void registerValidators();
     protected abstract boolean validate();
 }

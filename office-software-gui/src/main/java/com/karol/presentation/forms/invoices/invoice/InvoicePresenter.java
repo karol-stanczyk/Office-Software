@@ -8,6 +8,8 @@ import com.karol.presentation.forms.Validator;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
+import com.karol.repository.InvoiceRepository;
+import com.karol.repository.access.RepositoryProducer;
 import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.DateFormatter;
@@ -16,6 +18,7 @@ import com.karol.utils.NumberFormatter;
 import com.karol.utils.notifications.NotificationsService;
 import com.karol.utils.validation.Validators;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -45,6 +48,8 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
     @Inject private GoBackNavigator goBackNavigator;
     @Inject private LayoutService layoutService;
     @Inject private NotificationsService notificationsService;
+    @Inject private RepositoryProducer repositoryProducer;
+    private InvoiceRepository invoiceRepository;
 
     private ResourceBundle bundle;
 
@@ -57,6 +62,8 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
     public void initialize(URL url, ResourceBundle resourceBundle) {
         super.initialize(url, resourceBundle);
         this.bundle = resourceBundle;
+        this.action = new SimpleObjectProperty<>();
+        this.invoiceRepository = repositoryProducer.getInvoiceRepository();
         KeyBinding.registerActionForAllChildren(KeyCode.ENTER, root, this::saveInvoice);
     }
 
@@ -68,6 +75,7 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
         invoiceVat.setText("");
         invoicePaymentDate.setValue(null);
         setInvoiceCreationDate();
+        clearValidation();
     }
 
     @Override
@@ -75,7 +83,7 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
         validation.registerValidator(invoiceNumber, notEmptyValidator());
         validation.registerValidator(invoiceNetValue, cashValidator());
         validation.registerValidator(invoiceGrossValue, cashValidator());
-        validation.registerValidator(invoiceVat, onlyNumbersValidator());
+        validation.registerValidator(invoiceVat, cashValidator());
         validation.registerValidator(invoiceCreationDate, dateValidator());
         validation.registerValidator(invoicePaymentDate, dateValidator());
     }
@@ -91,8 +99,8 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
             Invoice invoice = createInvoice();
             try {
                 FormModeRunner.actions()
-                        .inNewMode(() -> cleanForm())
-                        .inEditMode(() -> System.out.println("TODO (Karol S.) update invoice"))
+                        .inNewMode(() -> invoiceRepository.persist(invoice, contract))
+                        .inEditMode(() -> invoiceRepository.update(invoice))
                         .run(action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.contractor.saved.properly"));
             } catch (DatabaseException e) {
@@ -121,9 +129,9 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
             invoice = this.invoice;
         }
         invoice.setNumber(invoiceNumber.getText());
-        invoice.setNetValue(NumberFormatter.toDouble(invoiceNetValue.getText()));
-        invoice.setGrossValue(NumberFormatter.toDouble(invoiceGrossValue.getText()));
-        invoice.setVAT(NumberFormatter.toDouble(invoiceVat.getText()));
+        invoice.setNetValue(NumberFormatter.fromStringCash(invoiceNetValue.getText()));
+        invoice.setGrossValue(NumberFormatter.fromStringCash(invoiceGrossValue.getText()));
+        invoice.setVAT(NumberFormatter.fromStringCash(invoiceVat.getText()));
         invoice.setPaymentDate(DateFormatter.fromLocalDate(invoicePaymentDate.getValue()));
         invoice.setCreationDate(DateFormatter.fromLocalDate(invoiceCreationDate.getValue()));
         return invoice;
@@ -131,6 +139,16 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
 
     public void setInvoice(Invoice invoice, Contract contract) {
         this.invoice = invoice;
+        this.contract = contract;
+        invoiceNumber.setText(invoice.getNumber());
+        invoiceNetValue.setText(NumberFormatter.toStringCash(invoice.getNetValue()));
+        invoiceGrossValue.setText(NumberFormatter.toStringCash(invoice.getGrossValue()));
+        invoiceVat.setText(NumberFormatter.toStringCash(invoice.getVAT()));
+        invoicePaymentDate.setValue(DateFormatter.toLocalDate(invoice.getPaymentDate()));
+        invoiceCreationDate.setValue(DateFormatter.toLocalDate(invoice.getCreationDate()));
+    }
+
+    public void setContract(Contract contract) {
         this.contract = contract;
     }
 
@@ -141,8 +159,8 @@ public class InvoicePresenter extends Validator implements Initializable, Cleana
 
     private void applyFormMode() {
         FormModeRunner.actions()
-                .inNewMode(() -> formHeaderText.setText(bundle.getString("new.contractor")))
-                .inEditMode(() -> formHeaderText.setText(bundle.getString("new.contractor.edit")))
+                .inNewMode(() -> formHeaderText.setText(bundle.getString("invoice.header.new")))
+                .inEditMode(() -> formHeaderText.setText(bundle.getString("invoice.header.edit")))
                 .run(action.getValue());
     }
 }
