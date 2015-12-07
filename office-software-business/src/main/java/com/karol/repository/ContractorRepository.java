@@ -1,6 +1,7 @@
 package com.karol.repository;
 
 import com.karol.model.Contractor;
+import com.karol.repository.access.EntityManager;
 import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
 import com.karol.repository.utils.DatabaseException;
@@ -12,7 +13,15 @@ import java.util.Optional;
 
 public class ContractorRepository {
 
-    @Inject private CrudRepository<Contractor> contractorRepository;
+    @Inject
+    private CrudRepository<Contractor> contractorRepository;
+
+    public ContractorRepository() {
+    }
+
+    public ContractorRepository(EntityManager entityManager) {
+        contractorRepository = new CrudRepository<>(entityManager);
+    }
 
     public List<Contractor> findAll() {
         return contractorRepository.findWithNamedQuery(Contractor.FIND_ALL);
@@ -44,6 +53,10 @@ public class ContractorRepository {
         return contractorRepository.findWithNamedQuery(
                 Contractor.FIND_BY_LAST_NAME, QueryParameter.with("lastName", lastName).parameters()
         );
+    }
+
+    protected void deleteAll() {
+        contractorRepository.runQuery(Contractor.DELETE_ALL);
     }
 
     @LogEvent

@@ -17,6 +17,10 @@ public class EntityManager {
         this.entityManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
     }
 
+    public EntityManager(String persistenceUnitName) {
+        this.entityManager = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
+    }
+
     public void persist(Object o) {
         entityManager.persist(o);
     }

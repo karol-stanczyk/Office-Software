@@ -1,10 +1,14 @@
 package com.karol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@XmlRootElement
 public class Transfer implements Serializable {
 
     @Id
@@ -18,6 +22,7 @@ public class Transfer implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date transferDate;
 
+    @JsonIgnore
     @ManyToOne
     private Invoice invoice;
 

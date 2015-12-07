@@ -1,12 +1,16 @@
 package com.karol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@XmlRootElement
 public class Invoice implements Serializable {
 
     @Id
@@ -24,6 +28,7 @@ public class Invoice implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
 
+    @JsonIgnore
     @ManyToOne
     private Contract contract;
 

@@ -2,16 +2,27 @@ package com.karol.repository;
 
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
+import com.karol.repository.access.EntityManager;
 import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
 import com.karol.repository.utils.DatabaseException;
+import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
 
 public class ContractRepository {
+    private static final Logger log = Logger.getLogger(ContractRepository.class);
 
     @Inject private CrudRepository<Contract> contractRepository;
     @Inject private ContractorRepository contractorRepository;
+
+    public ContractRepository() {
+    }
+
+    public ContractRepository(EntityManager entityManager) {
+        contractorRepository = new ContractorRepository(entityManager);
+        contractRepository = new CrudRepository<>(entityManager);
+    }
 
     @LogEvent
     @Transactional
@@ -21,7 +32,7 @@ public class ContractRepository {
         try {
             contractorRepository.update(contractor);
         } catch (DatabaseException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return contract;
     }

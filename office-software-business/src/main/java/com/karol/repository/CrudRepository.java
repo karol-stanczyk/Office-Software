@@ -12,6 +12,13 @@ public class CrudRepository<T> {
     @Inject
     private EntityManager manager;
 
+    public CrudRepository() {
+    }
+
+    public CrudRepository(EntityManager entityManager) {
+        manager = entityManager;
+    }
+
     public T persist(T object) {
         manager.persist(object);
         return object;
@@ -28,6 +35,10 @@ public class CrudRepository<T> {
     public void delete(T object) {
         T result = manager.merge(object);
         manager.remove(result);
+    }
+
+    public void runQuery(String namedQueryName) {
+        manager.createNamedQuery(namedQueryName).executeUpdate();
     }
 
     @SuppressWarnings("unchecked")
