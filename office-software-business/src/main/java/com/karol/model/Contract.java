@@ -1,5 +1,6 @@
 package com.karol.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -22,10 +23,16 @@ public class Contract implements Serializable {
 
     private String number;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date validityPeriod;
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    private Date validityPeriodFrom;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    private Date validityPeriodTo;
+
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private Date paymentDate;
 
     @JsonIgnore
@@ -39,11 +46,11 @@ public class Contract implements Serializable {
         this.invoiceList = new ArrayList<>();
     }
 
-    public Contract(Period period, String number, Date validityPeriod, Date paymentDate) {
+    public Contract(Period period, String number, Date validityPeriodFrom, Date paymentDate) {
         this();
         this.period = period;
         this.number = number;
-        this.validityPeriod = validityPeriod;
+        this.validityPeriodFrom = validityPeriodFrom;
         this.paymentDate = paymentDate;
     }
 
@@ -71,12 +78,12 @@ public class Contract implements Serializable {
         this.number = number;
     }
 
-    public Date getValidityPeriod() {
-        return validityPeriod;
+    public Date getValidityPeriodFrom() {
+        return validityPeriodFrom;
     }
 
-    public void setValidityPeriod(Date validityPeriod) {
-        this.validityPeriod = validityPeriod;
+    public void setValidityPeriodFrom(Date validityPeriod) {
+        this.validityPeriodFrom = validityPeriod;
     }
 
     public Date getPaymentDate() {
@@ -103,6 +110,14 @@ public class Contract implements Serializable {
         this.invoiceList = invoiceList;
     }
 
+    public Date getValidityPeriodTo() {
+        return validityPeriodTo;
+    }
+
+    public void setValidityPeriodTo(Date validityPeriodTo) {
+        this.validityPeriodTo = validityPeriodTo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,7 +128,9 @@ public class Contract implements Serializable {
         if (id != contract.id) return false;
         if (period != contract.period) return false;
         if (number != null ? !number.equals(contract.number) : contract.number != null) return false;
-        if (validityPeriod != null ? !validityPeriod.equals(contract.validityPeriod) : contract.validityPeriod != null)
+        if (validityPeriodFrom != null ? !validityPeriodFrom.equals(contract.validityPeriodFrom) : contract.validityPeriodFrom != null)
+            return false;
+        if (validityPeriodTo != null ? !validityPeriodTo.equals(contract.validityPeriodTo) : contract.validityPeriodTo != null)
             return false;
         if (paymentDate != null ? !paymentDate.equals(contract.paymentDate) : contract.paymentDate != null)
             return false;
@@ -129,23 +146,11 @@ public class Contract implements Serializable {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (period != null ? period.hashCode() : 0);
         result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (validityPeriod != null ? validityPeriod.hashCode() : 0);
+        result = 31 * result + (validityPeriodFrom != null ? validityPeriodFrom.hashCode() : 0);
+        result = 31 * result + (validityPeriodTo != null ? validityPeriodTo.hashCode() : 0);
         result = 31 * result + (paymentDate != null ? paymentDate.hashCode() : 0);
         result = 31 * result + (contractor != null ? contractor.hashCode() : 0);
         result = 31 * result + (invoiceList != null ? invoiceList.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Contract{" +
-                "id=" + id +
-                ", period=" + period +
-                ", number='" + number + '\'' +
-                ", validityPeriod=" + validityPeriod +
-                ", paymentDate=" + paymentDate +
-                ", contractor=" + contractor +
-                ", invoiceList=" + invoiceList +
-                '}';
     }
 }

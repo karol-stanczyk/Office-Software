@@ -82,10 +82,10 @@ public class ContractorRepository {
     private void checkPersistingInDatabase(Contractor contractor) throws DatabaseException {
         Optional<Contractor> contractorPesel = findByPesel(contractor.getPesel());
         Optional<Contractor> contractorNip = findByNip(contractor.getNip());
-        if (!contractor.getPesel().equals("") && contractorPesel.isPresent() && !contractorPesel.get().getId().equals(contractor.getId())) {
+        if (!contractor.getPesel().equals("") && contractorPesel.isPresent() && !(contractorPesel.get().getId() == contractor.getId())) {
             throw new DatabaseException("pesel.constraints.exception");
         }
-        if (!contractor.getNip().equals("") && contractorNip.isPresent() && !contractorNip.get().getId().equals(contractor.getId())) {
+        if (!contractor.getNip().equals("") && contractorNip.isPresent() && !(contractorNip.get().getId() == contractor.getId())) {
             throw new DatabaseException("nip.constraints.exception");
         }
     }

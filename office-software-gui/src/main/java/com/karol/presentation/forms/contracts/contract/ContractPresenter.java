@@ -44,7 +44,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     @FXML private Label formHeaderText;
     @FXML private TextField contractNumber;
     @FXML private ComboBox<AbstractComboBoxEnum<Period>> contractPeriod;
-    @FXML private DatePicker validityPeriod;
+    @FXML private DatePicker validityPeriodFrom;
+    @FXML private DatePicker validityPeriodTo;
     @FXML private DatePicker paymentDate;
     @FXML private Parent root;
 
@@ -74,7 +75,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     protected void registerValidators() {
         validation.registerValidator(contractNumber, notEmptyValidator());
         validation.registerValidator(contractPeriod, notEmptyValidator());
-        validation.registerValidator(validityPeriod, dateValidator());
+        validation.registerValidator(validityPeriodFrom, dateValidator());
+        validation.registerValidator(validityPeriodTo, dateValidator());
         validation.registerValidator(paymentDate, notEmptyValidator());
     }
 
@@ -82,7 +84,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     public void cleanForm() {
         contractNumber.setText("");
         contractPeriod.getSelectionModel().select(null);
-        validityPeriod.setValue(null);
+        validityPeriodFrom.setValue(null);
+        validityPeriodTo.setValue(null);
         paymentDate.setValue(null);
     }
 
@@ -129,7 +132,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
         contract.setNumber(contractNumber.getText());
         contract.setPeriod(contractPeriod.getValue().getValue());
         contract.setPaymentDate(DateFormatter.fromLocalDate(paymentDate.getValue()));
-        contract.setValidityPeriod(DateFormatter.fromLocalDate(validityPeriod.getValue()));
+        contract.setValidityPeriodFrom(DateFormatter.fromLocalDate(validityPeriodFrom.getValue()));
+        contract.setValidityPeriodTo(DateFormatter.fromLocalDate(validityPeriodTo.getValue()));
         return contract;
     }
 
@@ -146,7 +150,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
         this.contract = contract;
         contractNumber.setText(contract.getNumber());
         contractPeriod.getSelectionModel().select(new AbstractComboBoxEnum<>(contract.getPeriod()));
-        validityPeriod.setValue(DateFormatter.toLocalDate(contract.getValidityPeriod()));
+        validityPeriodTo.setValue(DateFormatter.toLocalDate(contract.getValidityPeriodTo()));
+        validityPeriodFrom.setValue(DateFormatter.toLocalDate(contract.getValidityPeriodFrom()));
         paymentDate.setValue(DateFormatter.toLocalDate(contract.getPaymentDate()));
     }
 
@@ -167,7 +172,8 @@ public class ContractPresenter extends Validator implements Initializable, Clean
 
     private void initializeValues() {
         this.formMode = new SimpleObjectProperty<>();
-        this.validityPeriod.setConverter(DateFormatter.createConverter());
+        this.validityPeriodFrom.setConverter(DateFormatter.createConverter());
+        this.validityPeriodTo.setConverter(DateFormatter.createConverter());
         this.paymentDate.setConverter(DateFormatter.createConverter());
     }
 

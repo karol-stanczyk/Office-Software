@@ -22,12 +22,17 @@
             <ComboBox fx:id="contractPeriod" id="%contract.period" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
             <Label styleClass="field-label" text="%contract.validityPeriod" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <DatePicker fx:id="validityPeriod" id="%contract.validityPeriod" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-            <Label styleClass="field-label" text="%contract.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <DatePicker fx:id="paymentDate" id="%contract.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Label styleClass="field-label" text="%contract.validityPeriod.from" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <DatePicker fx:id="validityPeriodFrom" id="%contract.validityPeriod.from" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-            <GridPane GridPane.rowIndex="6" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
+            <Label styleClass="field-label" text="%contract.validityPeriod.to" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <DatePicker fx:id="validityPeriodTo" id="%contract.validityPeriod.to" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+            <Label styleClass="field-label" text="%contract.paymentDate" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <DatePicker fx:id="paymentDate" id="%contract.paymentDate" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+            <GridPane GridPane.rowIndex="7" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
                 <Button fx:id="goBackButton" text="%button.goBack" onAction="#goBack" GridPane.columnIndex="0" styleClass="action-button" focusTraversable="false"/>
                 <Button text="%button.save" onAction="#saveContract" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" styleClass="action-button"/>
             </GridPane>

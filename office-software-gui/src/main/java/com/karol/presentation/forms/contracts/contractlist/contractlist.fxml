@@ -33,7 +33,7 @@
                             <PropertyValueFactory property="index"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="%contract.list.number" prefWidth="450.0">
+                    <TableColumn text="%contract.list.number" prefWidth="400.0">
                         <cellValueFactory>
                             <PropertyValueFactory property="number"/>
                         </cellValueFactory>
@@ -43,9 +43,14 @@
                             <PropertyValueFactory property="period"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="%contract.list.validityPeriod" prefWidth="150.0">
+                    <TableColumn text="%contract.list.validityPeriodFrom" prefWidth="100.0">
                         <cellValueFactory>
-                            <PropertyValueFactory property="validityPeriod"/>
+                            <PropertyValueFactory property="validityPeriodFrom"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="%contract.list.validityPeriodTo" prefWidth="100.0">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="validityPeriodTo"/>
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn text="%contract.list.paymentDate" prefWidth="150.0">
