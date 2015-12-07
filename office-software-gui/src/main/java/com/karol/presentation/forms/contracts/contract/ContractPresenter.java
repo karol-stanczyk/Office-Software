@@ -73,7 +73,7 @@ public class ContractPresenter extends Validator implements Initializable, Clean
     @Override
     protected void registerValidators() {
         validation.registerValidator(contractNumber, notEmptyValidator());
-        validation.registerValidator(contractPeriod, dateValidator());
+        validation.registerValidator(contractPeriod, notEmptyValidator());
         validation.registerValidator(validityPeriod, dateValidator());
         validation.registerValidator(paymentDate, notEmptyValidator());
     }
@@ -108,7 +108,7 @@ public class ContractPresenter extends Validator implements Initializable, Clean
                         })
                         .inEditMode(() -> contractRepository.update(contract))
                         .run(formMode.getValue());
-                notificationsService.showInformation(bundle.getString("notifications.contract23.saved.properly"));
+                notificationsService.showInformation(bundle.getString("notifications.contract.saved.properly"));
             } catch (DatabaseException e) {
                 notificationsService.showError(Bundles.get(e.getMessage()));
             }
