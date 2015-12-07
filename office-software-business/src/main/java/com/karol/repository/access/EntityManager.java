@@ -11,14 +11,21 @@ import java.util.Map;
 public class EntityManager {
 
     private static final String PERSISTENCE_UNIT_NAME = "lite_unit";
+    private EntityManagerFactory entityManagerFactory;
     javax.persistence.EntityManager entityManager;
 
     public EntityManager() {
-        this.entityManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        this.entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
 
     public EntityManager(String persistenceUnitName) {
-        this.entityManager = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
+        this.entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
+        this.entityManager = entityManagerFactory.createEntityManager();
+    }
+
+    public javax.persistence.EntityManager getEntityManager() {
+        return entityManager;
     }
 
     public void persist(Object o) {
@@ -91,6 +98,7 @@ public class EntityManager {
 
     public void close() {
         entityManager.close();
+        entityManagerFactory.close();
     }
 
     public boolean isOpen() {

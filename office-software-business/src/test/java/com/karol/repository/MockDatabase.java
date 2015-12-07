@@ -7,22 +7,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 
 public abstract class MockDatabase {
 
     protected static EntityManager entityManager;
 
     @BeforeClass
-    public static void prepare() {
-        boolean deleted = new File("database.db").delete();
+    public static void prepare() throws IOException {
         entityManager = new EntityManager("test_lite_unit");
     }
 
     @AfterClass
-    public static void clean() {
+    public static void clean() throws IOException, InterruptedException {
         entityManager.close();
-        entityManager = null;
-        boolean deleted = new File("database.db").delete();
+        Files.deleteIfExists(FileSystems.getDefault().getPath("database.db"));
     }
 
     @Before
@@ -31,7 +33,7 @@ public abstract class MockDatabase {
     }
 
     @After
-    public void cleanDatabase() {
+    public void rollbackTransaction() {
         entityManager.getTransaction().rollback();
     }
 }
