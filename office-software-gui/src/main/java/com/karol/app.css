@@ -54,6 +54,10 @@ DatePicker {
     -fx-border-color: white;
 }
 
+.input-width {
+    -fx-pref-width: 300px;
+}
+
 Button {
     -fx-background-radius: 0, 0, 0, 0;
 }

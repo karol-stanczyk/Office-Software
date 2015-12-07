@@ -22,6 +22,7 @@
             <ComboBox fx:id="contractPeriod" id="%contract.period" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
             <Label styleClass="field-label" text="%contract.validityPeriod" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <Separator styleClass="input-width" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
             <Label styleClass="field-label" text="%contract.validityPeriod.from" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
             <DatePicker fx:id="validityPeriodFrom" id="%contract.validityPeriod.from" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
