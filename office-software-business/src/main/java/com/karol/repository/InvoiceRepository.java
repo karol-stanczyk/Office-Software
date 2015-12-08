@@ -2,15 +2,29 @@ package com.karol.repository;
 
 import com.karol.model.Contract;
 import com.karol.model.Invoice;
+import com.karol.repository.access.EntityManager;
 import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 public class InvoiceRepository {
 
     @Inject private CrudRepository<Invoice> invoiceRepository;
     @Inject private ContractRepository contractRepository;
+
+    public InvoiceRepository() {
+    }
+
+    public InvoiceRepository(EntityManager entityManager) {
+        invoiceRepository = new CrudRepository<>(entityManager);
+        contractRepository = new ContractRepository(entityManager);
+    }
+
+    public Optional<Invoice> findById(long id) {
+        return Optional.ofNullable(invoiceRepository.find(Invoice.class, id));
+    }
 
     @LogEvent
     @Transactional
@@ -18,7 +32,6 @@ public class InvoiceRepository {
         invoice.setContract(contract);
         invoice = invoiceRepository.persist(invoice);
         contract.getInvoiceList().add(invoice);
-        contractRepository.update(contract);
         return invoice;
     }
 

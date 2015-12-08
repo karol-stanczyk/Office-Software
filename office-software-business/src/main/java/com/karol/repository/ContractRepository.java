@@ -5,10 +5,10 @@ import com.karol.model.Contractor;
 import com.karol.repository.access.EntityManager;
 import com.karol.repository.access.LogEvent;
 import com.karol.repository.access.Transactional;
-import com.karol.repository.utils.DatabaseException;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 public class ContractRepository {
     private static final Logger log = Logger.getLogger(ContractRepository.class);
@@ -24,16 +24,16 @@ public class ContractRepository {
         contractRepository = new CrudRepository<>(entityManager);
     }
 
+    public Optional<Contract> findById(long id) {
+        return Optional.ofNullable(contractRepository.find(Contract.class, id));
+    }
+
     @LogEvent
     @Transactional
     public Contract persist(Contract contract, Contractor contractor) {
+        contract.setContractor(contractor);
         contract = contractRepository.persist(contract);
         contractor.getContractList().add(contract);
-        try {
-            contractorRepository.update(contractor);
-        } catch (DatabaseException e) {
-            log.error(e);
-        }
         return contract;
     }
 
