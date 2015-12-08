@@ -106,7 +106,7 @@ public class TransferPresenter extends Validator implements Initializable, Clean
             Transfer transfer = createTransfer();
             try {
                 FormModeRunner.actions()
-                        .inNewMode(() -> transferRepository.persist(invoice, transfer))
+                        .inNewMode(() -> transferRepository.persist(transfer, invoice))
                         .inEditMode(() -> transferRepository.update(transfer))
                         .run(action.getValue());
                 notificationsService.showInformation(bundle.getString("notifications.transfer.saved.properly"));

@@ -100,7 +100,7 @@ public class InvoiceListPresenter extends ListPresenter implements Initializable
             } else {
                 NotificationsService.showConfirmation(bundle.getString("confirmation.transfer.delete"), () -> {
                     paymentTable.getSelectionModel().getSelectedItems().stream()
-                            .forEach(item -> transferRepository.delete(item.getTransfer().getInvoice(), item.getTransfer()));
+                            .forEach(item -> transferRepository.delete(item.getTransfer(), item.getTransfer().getInvoice()));
                     deleteSuccessful();
                 });
             }
