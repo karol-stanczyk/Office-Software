@@ -1,7 +1,7 @@
 package com.karol.repository;
 
 import com.karol.model.*;
-import com.karol.repository.access.EntityManager;
+import com.karol.repository.connection.EntityManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -2,11 +2,14 @@ package com.karol.repository;
 
 import com.karol.model.Invoice;
 import com.karol.model.Transfer;
-import com.karol.repository.access.EntityManager;
-import com.karol.repository.access.LogEvent;
-import com.karol.repository.access.Transactional;
+import com.karol.repository.connection.EntityManager;
+import com.karol.repository.managment.LogEvent;
+import com.karol.repository.managment.Transactional;
+import com.karol.repository.utils.QueryParameter;
 
 import javax.inject.Inject;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class TransferRepository {
@@ -48,5 +51,13 @@ public class TransferRepository {
         invoice.getTransferList().remove(transfer);
         transferCrudRepository.delete(transfer);
         invoiceRepository.update(invoice);
+    }
+
+    public List<Transfer> getTransfersBetween(Date dateFrom, Date dateTo) {
+        return transferCrudRepository.findWithNamedQuery(Transfer.MONTHLY_REPORT,
+                QueryParameter.with("dateFrom", dateFrom)
+                        .and("dateTo", dateTo)
+                        .parameters()
+        );
     }
 }

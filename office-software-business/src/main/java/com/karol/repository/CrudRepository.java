@@ -1,6 +1,6 @@
 package com.karol.repository;
 
-import com.karol.repository.access.EntityManager;
+import com.karol.repository.connection.EntityManager;
 
 import javax.inject.Inject;
 import javax.persistence.Query;

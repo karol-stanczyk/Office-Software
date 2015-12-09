@@ -4,8 +4,13 @@ import com.karol.model.Contract;
 import com.karol.model.Contractor;
 import com.karol.model.Invoice;
 import com.karol.model.Transfer;
+import com.karol.utils.DateFormatter;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -54,7 +59,21 @@ public class TransferRepositoryTest extends MockDatabaseTest {
         //then
         Optional<Transfer> searchResult = transferRepository.findById(transfer.getId());
         assertEquals(false, searchResult.isPresent());
+    }
 
+    @Test
+    public void shouldReturnTransferBetweenSetDates() {
+        //given
+        Transfer transfer = createTransfer();
+        transfer.setTransferDate(DateFormatter.fromLocalDate(LocalDate.of(2015, 12, 11)));
+        Invoice invoice = createAndStoreInvoice();
+        transferRepository.persist(transfer, invoice);
+        //when
+        Date dateFrom = DateFormatter.fromLocalDate(LocalDate.of(2015, 11, 1));
+        Date dateTo = DateFormatter.fromLocalDate(LocalDate.of(2015, 12, 30));
+        List<Transfer> searchResult = transferRepository.getTransfersBetween(dateFrom, dateTo);
+        //then
+        assertEquals(true, searchResult.size() > 0);
     }
 
 

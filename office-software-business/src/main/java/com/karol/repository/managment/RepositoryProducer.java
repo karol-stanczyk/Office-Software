@@ -1,10 +1,11 @@
-package com.karol.repository.access;
+package com.karol.repository.managment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.karol.repository.ContractRepository;
 import com.karol.repository.ContractorRepository;
 import com.karol.repository.InvoiceRepository;
 import com.karol.repository.TransferRepository;
+import com.karol.repository.connection.EntityManager;
 import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.functions.VoidFunction;
 import net.sf.cglib.proxy.Enhancer;

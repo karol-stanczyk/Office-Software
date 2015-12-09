@@ -1,4 +1,4 @@
-package com.karol.repository.access;
+package com.karol.repository.connection;
 
 import javax.inject.Singleton;
 import javax.persistence.*;

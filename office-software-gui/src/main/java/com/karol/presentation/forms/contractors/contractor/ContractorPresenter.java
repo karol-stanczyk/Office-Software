@@ -8,7 +8,7 @@ import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.Action;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractorRepository;
-import com.karol.repository.access.RepositoryProducer;
+import com.karol.repository.managment.RepositoryProducer;
 import com.karol.repository.utils.DatabaseException;
 import com.karol.utils.Bundles;
 import com.karol.utils.KeyBinding;

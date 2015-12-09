@@ -1,7 +1,7 @@
 package com.karol.presentation.layout.control;
 
 import com.karol.presentation.layout.LayoutPresenter;
-import com.karol.repository.access.EntityManager;
+import com.karol.repository.connection.EntityManager;
 import com.karol.utils.Bundles;
 import com.karol.utils.notifications.NotificationsService;
 import javafx.scene.Parent;

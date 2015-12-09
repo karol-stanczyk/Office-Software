@@ -5,7 +5,6 @@ import com.karol.presentation.cache.ViewsCache;
 import com.karol.presentation.forms.start.StartView;
 import com.karol.presentation.layout.LayoutView;
 import com.karol.presentation.layout.control.LayoutService;
-import com.karol.repository.access.EntityManager;
 import com.karol.utils.Bundles;
 import com.karol.utils.notifications.NotificationsService;
 import com.karol.utils.validation.Validators;

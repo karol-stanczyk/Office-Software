@@ -8,7 +8,7 @@ import com.karol.presentation.forms.ListPresenter;
 import com.karol.presentation.layout.control.LayoutService;
 import com.karol.presentation.navigation.GoBackNavigator;
 import com.karol.repository.ContractRepository;
-import com.karol.repository.access.RepositoryProducer;
+import com.karol.repository.managment.RepositoryProducer;
 import com.karol.utils.notifications.NotificationsService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

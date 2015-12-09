@@ -2,9 +2,9 @@ package com.karol.repository;
 
 import com.karol.model.Contract;
 import com.karol.model.Contractor;
-import com.karol.repository.access.EntityManager;
-import com.karol.repository.access.LogEvent;
-import com.karol.repository.access.Transactional;
+import com.karol.repository.connection.EntityManager;
+import com.karol.repository.managment.LogEvent;
+import com.karol.repository.managment.Transactional;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;

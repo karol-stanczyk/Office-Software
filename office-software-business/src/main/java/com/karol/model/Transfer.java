@@ -9,8 +9,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Transfer.MONTHLY_REPORT, query = "SELECT t FROM Transfer t WHERE t.transferDate BETWEEN :dateFrom AND :dateTo GROUP BY t.transferDate")
+})
 @XmlRootElement
 public class Transfer implements Serializable {
+
+    public static final String MONTHLY_REPORT = "Transfer.MONTHLY_REPORT";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,12 +26,21 @@ public class Transfer implements Serializable {
     private double VAT;
 
     @Temporal(TemporalType.DATE)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date transferDate;
 
     @JsonIgnore
     @ManyToOne
     private Invoice invoice;
+
+    public Transfer() {
+    }
+
+    public Transfer(Date transferDate, double grossValue, double netValue) {
+        this.transferDate = transferDate;
+        this.grossValue = grossValue;
+        this.netValue = netValue;
+    }
 
     public long getId() {
         return id;
